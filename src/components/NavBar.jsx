@@ -50,26 +50,26 @@ const NavBar = () => {
         </a>
       </div>
 
-      {/* Absolute Center Links (Luxury Layout Pattern) */}
-      <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-12">
+      {/* Absolute Center Links (Pill Nav System) */}
+      <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-1 p-1.5 bg-white/[0.03] border border-white/10 rounded-full backdrop-blur-xl shadow-2xl pointer-events-auto">
         {navLinks.map((item, i) => (
           <a 
             key={item}
             href={`#${item.toLowerCase()}`}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
-            className="relative py-2 text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 hover:text-white transition-colors duration-500 outline-none cursor-none"
+            className="relative px-6 py-2.5 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors duration-500 outline-none cursor-none rounded-full"
           >
-            {item}
+            <span className="relative z-10">{item}</span>
             <AnimatePresence>
               {hoveredIndex === i && (
                 <motion.span
-                  layoutId="nav-underline"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className="absolute left-0 bottom-0 w-full h-[1px] bg-white opacity-80"
+                  layoutId="nav-pill"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+                  className="absolute inset-0 bg-white/10 rounded-full z-0 pointer-events-none"
                 />
               )}
             </AnimatePresence>

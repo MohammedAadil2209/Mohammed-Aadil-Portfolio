@@ -8,6 +8,8 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
   const totalFrames = 192; // 0 to 191
   const imagesRef = useRef([]);
 
+  const textRef = useRef(null);
+
   useEffect(() => {
     // Generate image URLs
     const imageUrls = Array.from({ length: totalFrames }, (_, i) => {
@@ -31,14 +33,36 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
       }
     });
 
-    // 2. Silently fetch all 153MB of images in the background entirely unlinked from the UI
-    imageUrls.forEach((url, i) => {
-      const img = new Image();
-      img.src = url;
-      img.onload = () => {
-        imagesRef.current[i] = img;
-      };
-    });
+    // 2. Silently fetch images in strictly throttled background chunks
+    // This entirely prevents the browser network queue from flooding and crushing
+    // the CPU on load, effectively eliminating scroll lag.
+    const loadImagesInChunks = async () => {
+      const chunkSize = 5;
+      for (let i = 0; i < totalFrames; i += chunkSize) {
+        const chunkUrls = imageUrls.slice(i, i + chunkSize);
+        
+        await Promise.all(chunkUrls.map((url, index) => {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.src = url;
+            // Force hardware decoding off the main thread so Lenis scroll never stutters
+            img.decode().then(() => {
+              imagesRef.current[i + index] = img;
+              resolve();
+            }).catch(() => {
+              // Fallback if decode isn't supported or fails
+              imagesRef.current[i + index] = img;
+              resolve();
+            });
+          });
+        }));
+        
+        // Relinquish exact control back to the main thread for 50ms every 5 images
+        // Guaranteed to keep the scroll perfectly smooth.
+        await new Promise(r => setTimeout(r, 50));
+      }
+    };
+    loadImagesInChunks();
 
     // Clean up
     return () => {
@@ -95,28 +119,57 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
     let currentFrame = { frame: 0 };
     renderFrame(0);
 
-    // Setup ScrollTrigger
-    gsap.to(currentFrame, {
-      frame: totalFrames - 1,
-      snap: 'frame',
-      ease: 'none',
+    // Setup ScrollTrigger for Canvas
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom bottom',
         scrub: 0.5, // Smooth scrubbing
         onUpdate: () => renderFrame(currentFrame.frame),
-      },
+      }
     });
+
+    tl.to(currentFrame, {
+      frame: totalFrames - 1,
+      snap: 'frame',
+      ease: 'none',
+      duration: 1
+    }, 0);
+
+    // 3D Parallax Typography Animation behind the canvas
+    tl.to(textRef.current, {
+      scale: 1.15,
+      y: -100,
+      opacity: 0.2, // Fades out as user scrolls deep into the sequence
+      ease: 'none',
+      duration: 1
+    }, 0);
   };
 
   return (
     <div ref={containerRef} className="relative w-full h-[500vh] bg-background">
-      <div className="sticky top-0 w-full h-screen overflow-hidden" style={{ willChange: "transform" }}>
-        <canvas ref={canvasRef} className="w-full h-full" style={{ willChange: "transform" }} />
+      <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center bg-[#060606]" style={{ willChange: "transform" }}>
+        
+        {/* Massive 3D Typography BEHIND the Canvas */}
+        <div 
+            ref={textRef} 
+            className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none select-none"
+            style={{ willChange: "transform, opacity" }}
+        >
+          <h1 className="text-[12vw] font-black tracking-tighter text-white/90 leading-[0.8] whitespace-nowrap drop-shadow-2xl">
+            MOHAMMED <br /> AADIL
+          </h1>
+          <p className="text-[1.2vw] font-mono tracking-[0.5em] text-emerald-500/80 uppercase mt-8 text-center max-w-5xl px-4 leading-relaxed">
+            Design Engineer &nbsp;&bull;&nbsp; Full-Stack Architect &nbsp;&bull;&nbsp; IoT & Embedded Systems
+          </p>
+        </div>
+
+        {/* 3D Sequence Canvas OVER the Text */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-10" style={{ willChange: "transform" }} />
         
         {/* Subtle Grain Overlay (Optimized) */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E')" }}></div>
+        <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.03]" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E')" }}></div>
       </div>
     </div>
   );
