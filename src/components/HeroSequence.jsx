@@ -23,20 +23,28 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
           img.src = url;
           img.onload = () => {
             loadedCount++;
-            onProgress((loadedCount / totalFrames) * 100);
+            
+            // Fake the progress bar to 100% since we are lazy-loading the majority
+            if (i < 5) onProgress((loadedCount / 5) * 100);
+            
             imagesRef.current[i] = img;
             resolve();
           };
           img.onerror = () => {
-             // In case of error, just resolve to not block
              resolve();
           };
         });
       });
 
-      await Promise.all(promises);
-      onLoaded();
-      initSequence();
+      // Crucial Fix: Instead of waiting for 150MB of images over a slow Vercel network connection,
+      // we ONLY strictly wait for the first 3 frames so the initial screen renders instantly!
+      // The rest of the 189 frames will continue downloading natively in the background.
+      const criticalInitialFrames = promises.slice(0, 3);
+      await Promise.all(criticalInitialFrames);
+      
+      onProgress(100); // Force UI to dismiss preloader instantly
+      onLoaded();      // Unlock the rest of the website
+      initSequence();  // Start the canvas sequence Engine
     };
 
     preloadImages();
