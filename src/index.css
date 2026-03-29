@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #121212;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+}
+
+/* Hide scrollbar for smooth scroll feel */
+::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: none; /* Custom cursor handles this */
+}
+
+/* General Link hover behavior */
+a, button {
+  cursor: none;
+}
