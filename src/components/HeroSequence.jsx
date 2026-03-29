@@ -15,39 +15,30 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
       return `/sequence/frame_${index}_delay-0.041s.png`;
     });
 
-    let loadedCount = 0;
-    const preloadImages = async () => {
-      const promises = imageUrls.map((url, i) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = url;
-          img.onload = () => {
-            loadedCount++;
-            
-            // Fake the progress bar to 100% since we are lazy-loading the majority
-            if (i < 5) onProgress((loadedCount / 5) * 100);
-            
-            imagesRef.current[i] = img;
-            resolve();
-          };
-          img.onerror = () => {
-             resolve();
-          };
-        });
-      });
+    // 1. Lightning-fast faux-loader to guarantee immediate unblocking (0.6 seconds)
+    // This entirely solves the Vercel preloader hanging and percentage math bugs.
+    gsap.to({ value: 0 }, {
+      value: 100,
+      duration: 0.5,
+      ease: 'power2.inOut',
+      onUpdate: function() {
+        onProgress(this.targets()[0].value);
+      },
+      onComplete: () => {
+        onProgress(100);
+        onLoaded();
+        initSequence(); // Engine starts safely, drawing frames when available.
+      }
+    });
 
-      // Crucial Fix: Instead of waiting for 150MB of images over a slow Vercel network connection,
-      // we ONLY strictly wait for the first 3 frames so the initial screen renders instantly!
-      // The rest of the 189 frames will continue downloading natively in the background.
-      const criticalInitialFrames = promises.slice(0, 3);
-      await Promise.all(criticalInitialFrames);
-      
-      onProgress(100); // Force UI to dismiss preloader instantly
-      onLoaded();      // Unlock the rest of the website
-      initSequence();  // Start the canvas sequence Engine
-    };
-
-    preloadImages();
+    // 2. Silently fetch all 153MB of images in the background entirely unlinked from the UI
+    imageUrls.forEach((url, i) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        imagesRef.current[i] = img;
+      };
+    });
 
     // Clean up
     return () => {
