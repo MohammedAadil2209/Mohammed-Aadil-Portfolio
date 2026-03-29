@@ -39,18 +39,18 @@ const AboutSection = () => {
       <div className="sticky top-0 w-full h-screen flex flex-col justify-center overflow-hidden px-4 md:px-24 font-sans text-center">
         
         {/* Step 2 */}
-        <div ref={text2Ref} className="absolute left-8 md:left-24 top-1/2 -translate-y-1/2 text-left max-w-[800px]">
-          <h2 className="text-4xl md:text-7xl font-medium leading-tight text-white/90 tracking-tighter drop-shadow-xl">
+        <div ref={text2Ref} className="absolute left-4 md:left-24 top-1/2 -translate-y-1/2 text-left w-[90%] md:max-w-[800px]">
+          <h2 className="text-3xl sm:text-4xl md:text-7xl font-medium leading-[1.2] md:leading-tight text-white/90 tracking-tighter drop-shadow-xl">
             Architecting scalable <br/>
-            <span className="italic font-light text-white/40">digital & physical ecosystems</span>
+            <span className="italic font-light text-white/40 block mt-1 md:mt-0">digital & physical ecosystems</span>
           </h2>
         </div>
 
         {/* Step 3 */}
-        <div ref={text3Ref} className="absolute right-8 md:right-24 top-1/2 -translate-y-1/2 text-right max-w-[800px]">
-          <h2 className="text-4xl md:text-7xl font-medium leading-[1.1] text-white/90 tracking-tighter drop-shadow-xl">
+        <div ref={text3Ref} className="absolute right-4 md:right-24 top-1/2 -translate-y-1/2 text-right w-[90%] md:max-w-[800px]">
+          <h2 className="text-3xl sm:text-4xl md:text-7xl font-medium leading-[1.2] md:leading-[1.1] text-white/90 tracking-tighter drop-shadow-xl">
             Harmonizing UI design, <br/>
-            <span className="italic font-light text-white/40 max-w-[600px] ml-auto block">systems logic, and IoT hardware</span>
+            <span className="italic font-light text-white/40 w-full md:max-w-[600px] ml-auto block mt-1 md:mt-0">systems logic, and IoT hardware</span>
           </h2>
         </div>
       </div>

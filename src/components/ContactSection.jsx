@@ -107,7 +107,7 @@ const ContactSection = () => {
         <div className="mt-20 flex flex-col">
             
             {/* Split Grid for Details */}
-            <div className="w-full flex flex-col md:flex-row justify-between items-end gap-12 md:gap-0 pb-12 border-b border-white/[0.05]">
+            <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0 pb-12 border-b border-white/[0.05]">
                 
                 {/* Location & Time block */}
                 <div className="flex flex-col gap-6 text-left w-full md:w-auto">
@@ -115,17 +115,17 @@ const ContactSection = () => {
                         <img 
                             src="/profile.jpeg" 
                             alt="Aadil" 
-                            className="w-14 h-16 rounded-lg object-cover border border-white/20 shadow-lg"
+                            className="w-14 h-16 rounded-lg object-cover border border-white/20 shadow-lg shrink-0"
                         />
                         <div>
                             <p className="text-white font-medium text-xl leading-none tracking-tight">Mohammed Aadil</p>
-                            <p className="text-white/40 text-xs tracking-widest uppercase mt-2">Full-Stack Developer | AI & IoT Systems</p>
+                            <p className="text-white/40 text-[10px] md:text-xs tracking-widest uppercase mt-2 w-full max-w-[200px] md:max-w-none">Full-Stack Developer | AI & IoT Systems</p>
                         </div>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] inline-flex flex-col md:flex-row gap-6 backdrop-blur-md">
+                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] inline-flex flex-col md:flex-row gap-6 md:items-center backdrop-blur-md self-start">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-white/[0.05] flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-full bg-white/[0.05] flex items-center justify-center shrink-0">
                                 <MapPin size={14} className="text-white/60" />
                             </div>
                             <div className="flex flex-col">
@@ -135,12 +135,12 @@ const ContactSection = () => {
                         </div>
                         <div className="hidden md:block w-px h-8 bg-white/10" />
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-white/[0.05] flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-full bg-white/[0.05] flex items-center justify-center shrink-0">
                                 <Clock size={14} className="text-white/60" />
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-[10px] uppercase tracking-widest text-white/30 font-semibold mb-0.5">Local Time</span>
-                                <span className="text-sm text-white/80 font-medium tracking-tight">
+                                <span className="text-sm text-white/80 font-medium tracking-tight whitespace-nowrap">
                                     {time || "Loading..."} IST
                                 </span>
                             </div>
@@ -149,14 +149,14 @@ const ContactSection = () => {
                 </div>
 
                 {/* Socials Block */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 self-start md:self-end">
                     <p className="text-white/30 text-[10px] font-mono tracking-widest uppercase text-left md:text-right">Social Profiles</p>
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-4 items-center flex-wrap">
                         <a 
                             href="https://github.com/MohammedAadil2209" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 text-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:-translate-y-1 transition-all duration-300 cursor-none"
+                            className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 text-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:-translate-y-1 transition-all duration-300 cursor-none shrink-0"
                             aria-label="GitHub"
                         >
                             <Github className="w-5 h-5" strokeWidth={1.5} />
@@ -166,7 +166,7 @@ const ContactSection = () => {
                             href="https://www.linkedin.com/in/mohammed-aadil-049b29322" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="p-3.5 rounded-2xl bg-[#0A66C2]/10 border border-[#0A66C2]/20 text-[#0A66C2] hover:bg-[#0A66C2]/20 hover:shadow-[0_0_20px_rgba(10,102,194,0.4)] hover:-translate-y-1 transition-all duration-300 cursor-none"
+                            className="p-3.5 rounded-2xl bg-[#0A66C2]/10 border border-[#0A66C2]/20 text-[#0A66C2] hover:bg-[#0A66C2]/20 hover:shadow-[0_0_20px_rgba(10,102,194,0.4)] hover:-translate-y-1 transition-all duration-300 cursor-none shrink-0"
                             aria-label="LinkedIn"
                         >
                             <Linkedin className="w-5 h-5" strokeWidth={1.5} />
@@ -176,7 +176,7 @@ const ContactSection = () => {
                             href="https://ig.me/m/mm.aadil007" 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="p-3.5 rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-500 hover:bg-pink-500/20 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:-translate-y-1 transition-all duration-300 cursor-none"
+                            className="p-3.5 rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-500 hover:bg-pink-500/20 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] hover:-translate-y-1 transition-all duration-300 cursor-none shrink-0"
                             aria-label="Instagram"
                         >
                             <Instagram className="w-5 h-5" strokeWidth={1.5} />

@@ -154,14 +154,16 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
         {/* Massive 3D Typography BEHIND the Canvas */}
         <div 
             ref={textRef} 
-            className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none select-none"
+            className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none select-none px-4"
             style={{ willChange: "transform, opacity" }}
         >
-          <h1 className="text-[12vw] font-black tracking-tighter text-white/90 leading-[0.8] whitespace-nowrap drop-shadow-2xl">
-            MOHAMMED <br /> AADIL
+          <h1 className="text-[16vw] md:text-[12vw] font-black tracking-tighter text-white/90 leading-[0.8] whitespace-nowrap drop-shadow-2xl text-center">
+            MOHAMMED <br className="md:hidden" /> AADIL
           </h1>
-          <p className="text-[1.2vw] font-mono tracking-[0.5em] text-emerald-500/80 uppercase mt-8 text-center max-w-5xl px-4 leading-relaxed">
-            Design Engineer &nbsp;&bull;&nbsp; Full-Stack Architect &nbsp;&bull;&nbsp; IoT & Embedded Systems
+          <p className="text-[8px] sm:text-[10px] md:text-[1.2vw] font-mono tracking-[0.3em] md:tracking-[0.5em] text-emerald-500/80 uppercase mt-4 md:mt-8 text-center max-w-5xl leading-relaxed flex flex-wrap justify-center gap-1 md:gap-2">
+            <span>Design Engineer</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
+            <span>Full-Stack Architect</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
+            <span>IoT & Embedded Systems</span>
           </p>
         </div>
 
