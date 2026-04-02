@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
 
 const ThreeViewer = () => {
     const mountRef = useRef(null);
@@ -10,101 +11,126 @@ const ThreeViewer = () => {
         const currentMount = mountRef.current;
         if (!currentMount) return;
 
-        // Scene
+        const isMobile = window.innerWidth < 768;
+
+        // Optimized Scene
         const scene = new THREE.Scene();
-        // Fog for depth
-        scene.fog = new THREE.FogExp2(0x121212, 0.05);
+        scene.background = new THREE.Color(0x020205);
+        scene.fog = new THREE.Fog(0x020205, 10, 30);
 
         // Camera
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 10;
+        camera.position.z = 15;
 
-        // Renderer
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        // Renderer with strict speed priority
+        const renderer = new THREE.WebGLRenderer({ 
+            antialias: !isMobile, 
+            powerPreference: "high-performance",
+            stencil: false,
+            depth: true
+        });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5));
         currentMount.appendChild(renderer.domElement);
 
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
+        // Starfield / Particles (Void Dust) - High performance
+        const starGeometry = new THREE.BufferGeometry();
+        const starCount = isMobile ? 300 : 800; // Significantly reduced for performance
+        const starPositions = new Float32Array(starCount * 3);
         
-        const pointLight = new THREE.PointLight(0xffffff, 2);
-        pointLight.position.set(5, 5, 5);
-        scene.add(pointLight);
+        for(let i = 0; i < starCount * 3; i+=3) {
+            starPositions[i] = (Math.random() - 0.5) * 50;
+            starPositions[i+1] = (Math.random() - 0.5) * 50;
+            starPositions[i+2] = (Math.random() - 0.5) * 50;
+        }
+        
+        starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        const starMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: isMobile ? 0.08 : 0.05,
+            transparent: true,
+            opacity: 0.5,
+            blending: THREE.AdditiveBlending
+        });
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        scene.add(stars);
 
-        const pointLight2 = new THREE.PointLight(0x4488ff, 3);
-        pointLight2.position.set(-5, -5, -5);
-        scene.add(pointLight2);
+        // Standard Material (Zero Transmission Lag)
+        const geometry = new THREE.IcosahedronGeometry(1, 0); 
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x4488ff,
+            metalness: 0.8,
+            roughness: 0.2,
+            transparent: true,
+            opacity: 0.4
+        });
 
-        // Objects
+        const objects = [];
         const group = new THREE.Group();
         scene.add(group);
 
-        const geometry = new THREE.IcosahedronGeometry(1.5, 0);
-        const material = new THREE.MeshPhysicalMaterial({
-            color: 0xffffff,
-            metalness: 0.1,
-            roughness: 0.2,
-            transmission: 0.9,
-            ior: 1.5,
-            thickness: 0.5,
-            transparent: true,
-        });
-
-        // Add floating objects
-        const objects = [];
-        for (let i = 0; i < 20; i++) {
+        const objectCount = isMobile ? 8 : 20;
+        for (let i = 0; i < objectCount; i++) {
             const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.x = (Math.random() - 0.5) * 20;
-            mesh.position.y = (Math.random() - 0.5) * 20;
-            mesh.position.z = (Math.random() - 0.5) * 20;
-            
-            mesh.rotation.x = Math.random() * Math.PI;
-            mesh.rotation.y = Math.random() * Math.PI;
-            
-            // Random scaling
-            const scale = Math.random() * 0.5 + 0.2;
-            mesh.scale.set(scale, scale, scale);
-            
+            mesh.position.set(
+                (Math.random() - 0.5) * 25,
+                (Math.random() - 0.5) * 25,
+                (Math.random() - 0.5) * 25
+            );
+            mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+            const s = Math.random() * 0.8 + 0.2;
+            mesh.scale.set(s, s, s);
             group.add(mesh);
-            objects.push({
-                mesh,
-                rx: Math.random() * 0.02 - 0.01,
-                ry: Math.random() * 0.02 - 0.01
-            });
+            objects.push({ mesh, speed: Math.random() * 0.005 + 0.002 });
         }
 
-        // Animation Loop with IntersectionObserver to prevent background lag
-        let animationFrameId;
-        let isVisible = false;
+        // Lighting - High Performance
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
         
-        const observer = new IntersectionObserver(([entry]) => {
-            isVisible = entry.isIntersecting;
-        });
-        observer.observe(currentMount);
+        const p1 = new THREE.PointLight(0x00ffff, 10, 50);
+        p1.position.set(10, 10, 10);
+        scene.add(p1);
 
+        let animationFrameId;
         const clock = new THREE.Clock();
 
         const animate = () => {
-            if (isVisible) {
-                const elapsedTime = clock.getElapsedTime();
-                
-                objects.forEach((obj, i) => {
-                    obj.mesh.rotation.x += obj.rx;
-                    obj.mesh.rotation.y += obj.ry;
-                    obj.mesh.position.y += Math.sin(elapsedTime * 2 + i) * 0.005;
-                });
-
-                group.rotation.y = elapsedTime * 0.1;
-
-                renderer.render(scene, camera);
-            }
+            const time = clock.getElapsedTime();
+            group.rotation.y = time * 0.03;
+            objects.forEach(obj => {
+                obj.mesh.rotation.y += obj.speed;
+                obj.mesh.rotation.x += obj.speed * 0.5;
+            });
+            stars.rotation.z = time * 0.01;
+            renderer.render(scene, camera);
             animationFrameId = requestAnimationFrame(animate);
         };
         animate();
 
-        // Responsive
+        // Scroll Integration - Ultra Clean
+        gsap.to(stars.position, {
+            z: 30,
+            ease: "none",
+            scrollTrigger: {
+                trigger: currentMount,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1
+            }
+        });
+
+        gsap.to(camera.position, {
+            z: 6,
+            ease: "none",
+            scrollTrigger: {
+                trigger: currentMount,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1
+            }
+        });
+
         const handleResize = () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -112,43 +138,36 @@ const ThreeViewer = () => {
         };
         window.addEventListener('resize', handleResize);
 
-        // ScrollTrigger for camera movement
-        gsap.to(camera.position, {
-            z: 2,
-            y: -2,
-            ease: "none",
-            scrollTrigger: {
-                trigger: currentMount,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-            }
-        });
-
         return () => {
             window.removeEventListener('resize', handleResize);
             cancelAnimationFrame(animationFrameId);
-            observer.disconnect();
             currentMount.removeChild(renderer.domElement);
             renderer.dispose();
             geometry.dispose();
             material.dispose();
+            starGeometry.dispose();
+            starMaterial.dispose();
         };
     }, []);
 
     return (
-        <section className="relative w-full h-[200vh] bg-background">
-            <div className="sticky top-0 w-full h-screen overflow-hidden pointer-events-none z-0">
+        <section className="relative w-full h-[200vh] bg-[#020205]">
+            <div className="sticky top-0 w-full h-screen overflow-hidden">
                 <div ref={mountRef} className="w-full h-full" />
             </div>
             
-            {/* Overlay Text */}
-            <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-                <div className="text-center px-4 mix-blend-difference">
-                    <h2 className="text-4xl md:text-7xl font-light text-white tracking-widest uppercase mt-[100vh]">
-                        Entering the <span className="font-bold block italic">Void</span>
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none px-6">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="text-center"
+                >
+                    <h2 className="text-5xl md:text-[8vw] font-black text-white leading-[0.9] tracking-tighter uppercase mb-6">
+                        Entering <br className="md:hidden" /> the Void
                     </h2>
-                </div>
+                    <div className="h-px w-24 md:w-48 bg-emerald-500/30 mx-auto" />
+                </motion.div>
             </div>
         </section>
     );

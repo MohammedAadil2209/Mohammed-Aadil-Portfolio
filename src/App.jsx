@@ -20,37 +20,28 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
 
   useEffect(() => {
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
+      smoothTouch: true,
     });
 
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Use native requestAnimationFrame for Lenis, which prevents lag spikes
-    // compared to forcing it inside the GSAP ticker for heavy canvas frames.
-    let rafId;
-    function raf(time) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    // Sync Lenis with GSAP Ticker for maximum performance
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
 
-    // Sync GSAP's lag smoothing to keep ScrollTrigger accurate
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();
-      cancelAnimationFrame(rafId);
+      gsap.ticker.remove(lenis.raf);
     };
   }, []);
 
@@ -60,7 +51,7 @@ function App() {
       <CustomCursor />
       
       <main className="relative w-full bg-[#050505]">
-        <NavBar />
+        <NavBar isProjectOpen={isProjectOpen} />
 
         {/* The Hero Scroll Sequence Container */}
         <HeroSequence 
@@ -87,8 +78,8 @@ function App() {
         {/* Experience & Achievements Timeline */}
         <ExperienceTimeline />
 
-        {/* Post-Scroll Premium Projects Grid using actual fetched devstudio projects */}
-        <ProjectsArchive />
+        {/* Post-Scroll Premium Projects Grid */}
+        <ProjectsArchive onProjectStateChange={(isOpen) => setIsProjectOpen(isOpen)} />
 
         {/* Global Footer and Interactive Contact Cards */}
         <ContactSection />

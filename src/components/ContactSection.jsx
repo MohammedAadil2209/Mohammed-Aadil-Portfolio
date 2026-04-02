@@ -57,12 +57,14 @@ const ContactSection = () => {
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col justify-between h-full">
         <div>
             <div className="mb-24 flex flex-col items-center text-center">
-                <h2 className="text-4xl md:text-7xl font-bold tracking-tighter text-white mb-6 flex flex-col items-center justify-center">
-                    <ScrollFloat text="Let's build the" className="mr-2 md:mr-4" />
-                    <ScrollFloat text="future together." delay={0.2} className="mr-2 md:mr-4" />
+                <h2 className="text-4xl md:text-8xl font-black tracking-tighter text-white mb-6 flex flex-col items-center justify-center uppercase leading-[0.85]">
+                    <ScrollFloat text="Solving technical" className="mr-2 md:mr-4" />
+                    <span className="italic font-serif font-light text-white/30 lowercase mt-4 tracking-normal">debt & system scale.</span>
                 </h2>
-                <p className="text-white/40 max-w-md mt-6 font-medium tracking-wide">
-                    Reach out to discuss your next cinematic project, enterprise platform, or creative technical challenge.
+                <div className="h-px w-24 bg-white/20 my-10" />
+                <p className="text-white/40 max-w-lg mt-6 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase leading-relaxed text-center">
+                    Direct access for high-load web architecture, <br/> 
+                    advanced IoT firmware, and bespoke freelance strategy.
                 </p>
             </div>
 

@@ -40,18 +40,25 @@ const AboutSection = () => {
         
         {/* Step 2 */}
         <div ref={text2Ref} className="absolute left-4 md:left-24 top-1/2 -translate-y-1/2 text-left w-[90%] md:max-w-[800px]">
-          <h2 className="text-3xl sm:text-4xl md:text-7xl font-medium leading-[1.2] md:leading-tight text-white/90 tracking-tighter drop-shadow-xl">
-            Architecting scalable <br/>
-            <span className="italic font-light text-white/40 block mt-1 md:mt-0">digital & physical ecosystems</span>
+          <h2 className="text-4xl md:text-8xl font-black leading-[0.8] text-white tracking-tight uppercase">
+            Built at the <br/>
+            <span className="italic font-serif font-light text-emerald-500 lowercase opacity-80 block mt-4 ml-6 md:ml-12">edge of the possible</span>
           </h2>
+          <p className="mt-8 font-mono text-[10px] md:text-xs text-white/40 tracking-[0.4em] uppercase max-w-sm">
+            Technical Architect // Independent Freelance Strategy
+          </p>
         </div>
 
         {/* Step 3 */}
         <div ref={text3Ref} className="absolute right-4 md:right-24 top-1/2 -translate-y-1/2 text-right w-[90%] md:max-w-[800px]">
-          <h2 className="text-3xl sm:text-4xl md:text-7xl font-medium leading-[1.2] md:leading-[1.1] text-white/90 tracking-tighter drop-shadow-xl">
-            Harmonizing UI design, <br/>
-            <span className="italic font-light text-white/40 w-full md:max-w-[600px] ml-auto block mt-1 md:mt-0">systems logic, and IoT hardware</span>
+          <h2 className="text-4xl md:text-8xl font-black leading-[0.85] text-white tracking-tight uppercase">
+            Code as a <br/>
+            <span className="italic font-serif font-light text-white/40 lowercase block mt-4 mr-6 md:mr-12">commercial weapon</span>
           </h2>
+          <div className="mt-12 h-px w-24 bg-white/20 ml-auto" />
+          <p className="mt-6 text-white/30 font-serif italic text-sm md:text-base leading-relaxed max-w-sm ml-auto">
+            From zero-lag WebGL to industrial IoT firmware. I solve the heavy technical debt so you don't have to.
+          </p>
         </div>
       </div>
     </section>

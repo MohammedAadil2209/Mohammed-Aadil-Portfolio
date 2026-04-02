@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 
-const NavBar = () => {
+const NavBar = ({ isProjectOpen }) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +33,7 @@ const NavBar = () => {
         visible: { y: 0 },
         hidden: { y: "-100%" },
       }}
-      animate={hidden ? "hidden" : "visible"}
+      animate={(hidden || isProjectOpen) ? "hidden" : "visible"}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 w-full z-[100] transition-all duration-700 flex items-center justify-between px-6 md:px-12 py-6 ${
         isScrolled 

@@ -11,140 +11,115 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
   const textRef = useRef(null);
 
   useEffect(() => {
-    // Generate image URLs
     const imageUrls = Array.from({ length: totalFrames }, (_, i) => {
       const index = String(i).padStart(3, '0');
       return `/sequence/frame_${index}_delay-0.041s.png`;
     });
 
-    // 1. Lightning-fast faux-loader to guarantee immediate unblocking (0.6 seconds)
-    // This entirely solves the Vercel preloader hanging and percentage math bugs.
-    gsap.to({ value: 0 }, {
-      value: 100,
-      duration: 0.5,
-      ease: 'power2.inOut',
-      onUpdate: function() {
-        onProgress(this.targets()[0].value);
-      },
-      onComplete: () => {
-        onProgress(100);
-        onLoaded();
-        initSequence(); // Engine starts safely, drawing frames when available.
-      }
-    });
+    // Immediate unblocking for smoother initial feel
+    onProgress(100);
+    onLoaded();
 
-    // 2. Silently fetch images in strictly throttled background chunks
-    // This entirely prevents the browser network queue from flooding and crushing
-    // the CPU on load, effectively eliminating scroll lag.
-    const loadImagesInChunks = async () => {
-      const chunkSize = 5;
-      for (let i = 0; i < totalFrames; i += chunkSize) {
-        const chunkUrls = imageUrls.slice(i, i + chunkSize);
-        
-        await Promise.all(chunkUrls.map((url, index) => {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.src = url;
-            // Force hardware decoding off the main thread so Lenis scroll never stutters
-            img.decode().then(() => {
-              imagesRef.current[i + index] = img;
-              resolve();
-            }).catch(() => {
-              // Fallback if decode isn't supported or fails
-              imagesRef.current[i + index] = img;
-              resolve();
-            });
-          });
-        }));
-        
-        // Relinquish exact control back to the main thread for 50ms every 5 images
-        // Guaranteed to keep the scroll perfectly smooth.
-        await new Promise(r => setTimeout(r, 50));
+    const loadImages = async () => {
+      for (let i = 0; i < totalFrames; i++) {
+        const img = new Image();
+        img.src = imageUrls[i];
+        img.onload = () => {
+          imagesRef.current[i] = img;
+          if (i === 0) renderFrame(0);
+        };
       }
     };
-    loadImagesInChunks();
+    loadImages();
 
-    // Clean up
+    // Prepare renderer once
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    initSequence();
+
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === containerRef.current) {
-          trigger.kill();
-        }
-      });
+      window.removeEventListener('resize', resizeCanvas);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []); // Run once on mount
+  }, []);
 
-  const initSequence = () => {
+  const resizeCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    // Buffer Allocation (Expensive - Only do on resize)
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+  };
+
+  const renderFrame = (index) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext('2d');
+    const img = imagesRef.current[index];
+    if (!img || !context) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const canvasRatio = w / h;
+    const imgRatio = img.width / img.height;
     
-    // Setup Canvas dimensions
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      renderFrame(currentFrame.frame);
-    };
-    
-    window.addEventListener('resize', resizeCanvas);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let drawWidth, drawHeight, offsetX, offsetY;
 
-    const renderFrame = (index) => {
-      const img = imagesRef.current[index];
-      if (!img || !context) return;
+    if (canvasRatio > imgRatio) {
+      drawWidth = w;
+      drawHeight = w / imgRatio;
+      offsetX = 0;
+      offsetY = (h - drawHeight) / 2;
+    } else {
+      drawWidth = h * imgRatio;
+      drawHeight = h;
+      offsetX = (w - drawWidth) / 2;
+      offsetY = 0;
+    }
 
-      // Object-fit: cover implementation for canvas
-      const canvasRatio = canvas.width / canvas.height;
-      const imgRatio = img.width / img.height;
-      
-      let drawWidth, drawHeight, offsetX, offsetY;
+    context.clearRect(0, 0, w, h);
+    context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+  };
 
-      if (canvasRatio > imgRatio) {
-        drawWidth = canvas.width;
-        drawHeight = canvas.width / imgRatio;
-        offsetX = 0;
-        offsetY = (canvas.height - drawHeight) / 2;
-      } else {
-        drawWidth = canvas.height * imgRatio;
-        drawHeight = canvas.height;
-        offsetX = (canvas.width - drawWidth) / 2;
-        offsetY = 0;
-      }
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-    };
-
+  const initSequence = () => {
     let currentFrame = { frame: 0 };
-    renderFrame(0);
-
-    // Setup ScrollTrigger for Canvas
-    const tl = gsap.timeline({
+    
+    gsap.to(currentFrame, {
+      frame: totalFrames - 1,
+      snap: 'frame',
+      ease: 'none',
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.5, // Smooth scrubbing
-        onUpdate: () => renderFrame(currentFrame.frame),
+        scrub: 0.5,
+        onUpdate: () => renderFrame(currentFrame.frame)
       }
     });
 
-    tl.to(currentFrame, {
-      frame: totalFrames - 1,
-      snap: 'frame',
-      ease: 'none',
-      duration: 1
-    }, 0);
-
-    // 3D Parallax Typography Animation behind the canvas
-    tl.to(textRef.current, {
+    gsap.to(textRef.current, {
       scale: 1.15,
       y: -100,
-      opacity: 0.2, // Fades out as user scrolls deep into the sequence
+      opacity: 0,
       ease: 'none',
-      duration: 1
-    }, 0);
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: '20% top',
+        scrub: true
+      }
+    });
   };
 
   return (
@@ -170,8 +145,8 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
         {/* 3D Sequence Canvas OVER the Text */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-10" style={{ willChange: "transform" }} />
         
-        {/* Subtle Grain Overlay (Optimized) */}
-        <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.03]" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E')" }}></div>
+        {/* Subtle Static Overlay (Optimized) */}
+        <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.02] bg-black/10"></div>
       </div>
     </div>
   );
