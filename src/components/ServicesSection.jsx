@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import ScrollFloat from './ScrollFloat';
 
 const CapabilityCard = ({ item, i }) => {
@@ -30,14 +30,14 @@ const CapabilityCard = ({ item, i }) => {
                 style={{
                     background: useTransform(
                         [mouseX, mouseY],
-                        ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.1), transparent 80%)`
+                        ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0) 80%)`
                     )
                 }}
             />
             
             <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start relative z-10">
                 {/* Large Background Numeral */}
-                <span className="absolute -right-4 -top-8 text-[12rem] font-black text-white/[0.02] pointer-events-none select-none group-hover:text-emerald-500/[0.03] transition-colors duration-1000">
+                <span className="absolute -right-4 -top-8 text-[12rem] font-black text-white/[0.02] pointer-events-none select-none group-hover:text-emerald-500/[0.03] transition-colors duration-1000 uppercase">
                     {item.num}
                 </span>
 

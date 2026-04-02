@@ -68,9 +68,10 @@ const CustomCursor = () => {
           translateX: "-50%",
           translateY: "-50%",
         }}
+        initial={{ backgroundColor: 'rgba(255,255,255,0)' }}
         animate={{
           scale: isHovering ? 1.8 : 1,
-          backgroundColor: isHovering ? 'rgba(255,255,255,0.1)' : 'transparent',
+          backgroundColor: isHovering ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0)',
           borderColor: isHovering ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.4)',
         }}
         transition={{ type: 'tween', ease: 'easeOut', duration: 0.25 }}
