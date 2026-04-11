@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Mail, Phone, ArrowUpRight, Instagram, Github, Linkedin, Clock, MapPin } from 'lucide-react';
+import { MessageCircle, Mail, Phone, ArrowUpRight, Instagram, Github, Linkedin, Clock, MapPin, Download } from 'lucide-react';
 import ScrollFloat from './ScrollFloat';
 
 const CONTACT_LINKS = [
@@ -199,7 +199,15 @@ const ContactSection = () => {
                 <p className="text-white/20 text-[10px] md:text-xs tracking-widest uppercase text-center md:text-left">
                     © {new Date().getFullYear()} Mohammed Aadil. All Rights Reserved.
                 </p>
-                <div className="flex items-center gap-6">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                    <a 
+                        href="/Mohammed%20Aadil.pdf" 
+                        download="Mohammed_Aadil_Resume.pdf"
+                        className="text-white/40 hover:text-white text-[10px] md:text-xs tracking-[0.2em] uppercase transition-colors duration-300 flex items-center gap-2 cursor-none border-b border-transparent hover:border-white/50 pb-1"
+                    >
+                        <Download size={14} /> Download Resume
+                    </a>
+                    <div className="hidden md:block w-px h-4 bg-white/10" />
                     <p className="text-white/30 text-[10px] md:text-xs tracking-widest uppercase flex items-center gap-2 font-semibold">
                          <span className="relative flex h-2 w-2">
                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

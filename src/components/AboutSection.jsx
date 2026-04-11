@@ -35,8 +35,8 @@ const AboutSection = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full h-[400vh] bg-transparent -mt-[400vh] z-10 pointer-events-none">
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-center overflow-hidden px-4 md:px-24 font-sans text-center">
+    <section ref={containerRef} className="relative w-full h-[400vh] bg-transparent -mt-[400vh] z-20">
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-center overflow-hidden px-4 md:px-24 font-sans text-center pointer-events-none">
         
         {/* Step 2 */}
         <div ref={text2Ref} className="absolute left-4 md:left-24 top-1/2 -translate-y-1/2 text-left w-[90%] md:max-w-[800px]">
@@ -59,6 +59,18 @@ const AboutSection = () => {
           <p className="mt-6 text-white/30 font-serif italic text-sm md:text-base leading-relaxed max-w-sm ml-auto">
             From zero-lag WebGL to industrial IoT firmware. I solve the heavy technical debt so you don't have to.
           </p>
+          <div className="mt-8 flex justify-end pointer-events-auto">
+            <a 
+              href="/Mohammed%20Aadil.pdf" 
+              download="Mohammed_Aadil_Resume.pdf"
+              className="inline-flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/30 rounded-full text-white/70 hover:text-white transition-all duration-300 cursor-none group outline-none"
+            >
+              <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">Download Résumé</span>
+              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500/20 group-hover:text-emerald-400 transition-all duration-300">
+                <svg className="w-3 h-3 md:w-3.5 md:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>

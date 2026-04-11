@@ -23,7 +23,7 @@ const NavBar = ({ isProjectOpen }) => {
     }
   });
 
-  const navLinks = ['About', 'Services', 'Projects'];
+  const navLinks = ['About', 'Resume', 'Services', 'Projects', 'Contact'];
 
   return (
     <>
@@ -107,7 +107,8 @@ const NavBar = ({ isProjectOpen }) => {
             {navLinks.map((item, i) => (
               <a 
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={item === 'Resume' ? "/Mohammed%20Aadil.pdf" : `#${item.toLowerCase()}`}
+                download={item === 'Resume' ? "Mohammed_Aadil_Resume.pdf" : undefined}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`relative z-10 px-6 py-2.5 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-500 outline-none cursor-none rounded-full
