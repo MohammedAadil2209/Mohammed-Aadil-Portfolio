@@ -135,10 +135,10 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
           <h1 className="text-[16vw] md:text-[12vw] font-black tracking-tighter text-white/90 leading-[0.8] whitespace-nowrap drop-shadow-2xl text-center">
             MOHAMMED <br className="md:hidden" /> AADIL
           </h1>
-          <p className="text-[8px] sm:text-[10px] md:text-[1.2vw] font-mono tracking-[0.3em] md:tracking-[0.5em] text-emerald-500/80 uppercase mt-4 md:mt-8 text-center max-w-5xl leading-relaxed flex flex-wrap justify-center gap-1 md:gap-2">
-            <span>Design Engineer</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
-            <span>Full-Stack Architect</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
-            <span>IoT & Embedded Systems</span>
+          <p className="text-[8px] sm:text-[10px] md:text-[1.2vw] font-mono tracking-[0.3em] md:tracking-[0.5em] text-rose-800/80 uppercase mt-4 md:mt-8 text-center max-w-5xl leading-relaxed flex flex-wrap justify-center gap-1 md:gap-2">
+            <span>System Architect</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
+            <span>Full-Stack Engineer</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
+            <span>Hardware & Embedded Systems</span>
           </p>
         </div>
 

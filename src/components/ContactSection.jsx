@@ -9,7 +9,7 @@ const CONTACT_LINKS = [
     title: "Chat on WhatsApp",
     subtitle: "+91 9976939641",
     icon: MessageCircle,
-    color: "from-green-500/20 to-emerald-900/20 text-emerald-400 group-hover:bg-emerald-500",
+    color: "from-red-900/20 to-rose-950/20 text-rose-700 group-hover:bg-rose-800",
     href: "https://wa.me/919976939641?text=Hi%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you."
   },
   {
@@ -87,7 +87,7 @@ const ContactSection = () => {
                     <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                     
                     <div className="relative z-10 flex justify-between items-start">
-                        <div className={`w-14 h-14 rounded-full flex items-center justify-center bg-white/5 border border-white/10 ${contact.color.split(' ')[2]} transition-colors duration-500 group-hover:text-white group-hover:bg-${contact.id === 'whatsapp' ? 'emerald' : contact.id === 'email' ? 'blue' : 'purple'}-500/20`}>
+                        <div className={`w-14 h-14 rounded-full flex items-center justify-center bg-white/5 border border-white/10 ${contact.color.split(' ')[2]} transition-colors duration-500 group-hover:text-white group-hover:bg-${contact.id === 'whatsapp' ? 'rose' : contact.id === 'email' ? 'blue' : 'purple'}-500/20`}>
                             <contact.icon strokeWidth={1.5} className="w-6 h-6" />
                         </div>
                         <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/5 border border-white/10 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 shadow-xl">
@@ -97,7 +97,7 @@ const ContactSection = () => {
 
                     <div className="relative z-10">
                         <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">{contact.title}</h3>
-                        <p className="text-xs text-emerald-400/90 tracking-[0.2em] font-mono uppercase">{contact.subtitle}</p>
+                        <p className="text-xs text-rose-700/90 tracking-[0.2em] font-mono uppercase">{contact.subtitle}</p>
                     </div>
                 </div>
                 </motion.a>
@@ -210,8 +210,8 @@ const ContactSection = () => {
                     <div className="hidden md:block w-px h-4 bg-white/10" />
                     <p className="text-white/30 text-[10px] md:text-xs tracking-widest uppercase flex items-center gap-2 font-semibold">
                          <span className="relative flex h-2 w-2">
-                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-700 opacity-75"></span>
+                             <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-800"></span>
                          </span>
                          Available For Work
                     </p>

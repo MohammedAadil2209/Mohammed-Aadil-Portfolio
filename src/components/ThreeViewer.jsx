@@ -166,7 +166,7 @@ const ThreeViewer = () => {
                     <h2 className="text-5xl md:text-[8vw] font-black text-white leading-[0.9] tracking-tighter uppercase mb-6">
                         Entering <br className="md:hidden" /> the Void
                     </h2>
-                    <div className="h-px w-24 md:w-48 bg-emerald-500/30 mx-auto" />
+                    <div className="h-px w-24 md:w-48 bg-rose-800/30 mx-auto" />
                 </motion.div>
             </div>
         </section>

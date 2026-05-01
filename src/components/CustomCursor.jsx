@@ -9,9 +9,18 @@ const CustomCursor = () => {
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
+  const [isMobile, setIsMobile] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    if (isMobile) return;
+
     // Pure DOM update, no React re-rendering on mousemove
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
@@ -38,10 +47,13 @@ const CustomCursor = () => {
     window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
+      window.removeEventListener('resize', checkMobile);
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <>

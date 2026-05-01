@@ -13,10 +13,10 @@ const FloatingContactBtn = () => {
       transition={{ delay: 2.5, type: "spring", stiffness: 200, damping: 20 }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[100] w-14 h-14 md:w-16 md:h-16 bg-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.4)] cursor-none hover-magnetic group outline-none"
+      className="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[100] w-14 h-14 md:w-16 md:h-16 bg-rose-800 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(136, 19, 55,0.4)] cursor-none hover-magnetic group outline-none"
     >
         {/* Continuous Ripple Effect */}
-        <div className="absolute inset-0 rounded-full bg-emerald-400 opacity-50 animate-ping group-hover:scale-150 transition-transform duration-700" style={{ animationDuration: '3s' }} />
+        <div className="absolute inset-0 rounded-full bg-rose-700 opacity-50 animate-ping group-hover:scale-150 transition-transform duration-700" style={{ animationDuration: '3s' }} />
         <MessageCircle strokeWidth={2} className="w-6 h-6 md:w-8 md:h-8 text-white relative z-10 group-hover:scale-110 transition-transform duration-300" />
     </motion.a>
   );

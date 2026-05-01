@@ -50,7 +50,7 @@ const ProjectCard = ({ title, category, link, index, image, isStared, onOpen }) 
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: index * 0.1 }}
-                className="relative w-full h-[500px] rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 transition-all duration-700 overflow-hidden isolate"
+                className="relative w-full h-[400px] md:h-[500px] rounded-[2rem] md:rounded-[2.5rem] bg-[#0c0c0c] border border-white/5 transition-all duration-700 overflow-hidden isolate"
             >
                 {/* Background Image Container */}
                 <div className="absolute inset-0 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] z-0">
@@ -75,7 +75,7 @@ const ProjectCard = ({ title, category, link, index, image, isStared, onOpen }) 
                 <div className="absolute inset-0 p-10 flex flex-col justify-end z-20 pointer-events-none" style={{ transform: "translateZ(60px)" }}>
                     <div className="flex flex-col gap-3 group-hover:-translate-y-4 transition-transform duration-700">
                         <div className="flex items-center gap-3">
-                            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">Case Study</span>
+                            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-rose-700 bg-rose-800/10 px-3 py-1 rounded-full border border-rose-800/20">Case Study</span>
                             <span className="text-[10px] uppercase tracking-[0.3em] font-medium text-white/40">{category}</span>
                         </div>
                         <h3 className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-tight drop-shadow-2xl">{title}</h3>
@@ -83,7 +83,7 @@ const ProjectCard = ({ title, category, link, index, image, isStared, onOpen }) 
                     
                     <div className="mt-8 overflow-hidden">
                        <p className="text-white/40 text-xs tracking-widest uppercase flex items-center gap-3 translate-y-12 group-hover:translate-y-0 transition-transform duration-700 delay-100">
-                           View Deep Dive <span className="w-8 h-px bg-emerald-500 group-hover:w-16 transition-all duration-700" />
+                           View Deep Dive <span className="w-8 h-px bg-rose-800 group-hover:w-16 transition-all duration-700" />
                        </p>
                     </div>
                 </div>
@@ -131,12 +131,20 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
             image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop" 
         },
         { 
+            title: "Gesture Control Robot [Nexora]", 
+            category: "Gesture Control // National Winner", 
+            type: "iot",
+            link: "https://nexora-devstudio.vercel.app/", 
+            image: "/gallery/techfusion/prototype.jpg",
+            isStared: true
+        },
+        { 
             title: "Water Level Monitor", 
             category: "IoT // Cloud Integration", 
             type: "iot",
             link: "#", 
             image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2000&auto=format&fit=crop",
-            isStared: true
+            isStared: false
         },
         { 
             title: "Obstacle Detection Robot", 
@@ -182,7 +190,7 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                         >
                             <div className="mb-24">
                                 <h2 className="text-6xl md:text-[12vw] font-black tracking-tighter text-white leading-[0.85] uppercase flex flex-col">
-                                    <ScrollFloat text="Selected" />
+                                    <ScrollFloat text="Featured" />
                                     <span className="text-white/20 italic font-light font-serif lowercase mt-2">works.</span>
                                 </h2>
                                 <p className="mt-8 text-white/30 text-[10px] md:text-xs uppercase tracking-[0.5em] font-mono max-w-lg">Freelance Architecture // Selected digital and hardware solutions delivered for commercial usage.</p>
@@ -199,7 +207,7 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                                     </div>
                                     <div className="absolute inset-0 p-12 flex flex-col justify-end z-10 pointer-events-none text-left">
-                                        <span className="text-emerald-500 font-mono text-[10px] tracking-[0.3em] uppercase mb-4">Web // Solutions Engineer</span>
+                                        <span className="text-rose-800 font-mono text-[10px] tracking-[0.3em] uppercase mb-4">Web // Solutions Engineer</span>
                                         <h3 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">Web <br /> Development</h3>
                                         <p className="mt-6 text-white/40 text-[10px] uppercase tracking-widest translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700">Enter Domain →</p>
                                     </div>
@@ -236,7 +244,7 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                                     onClick={() => setView("portal")}
                                     className="absolute -top-10 left-0 flex items-center gap-4 px-6 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full text-[10px] uppercase font-black tracking-[0.2em] text-white/60 hover:text-white hover:bg-white/10 transition-all group z-50"
                                 >
-                                    <span className="w-6 h-px bg-emerald-500 group-hover:w-10 transition-all" /> Back to Base
+                                    <span className="w-6 h-px bg-rose-800 group-hover:w-10 transition-all" /> Back to Base
                                 </button>
                                 
                                 <div className="flex-1">

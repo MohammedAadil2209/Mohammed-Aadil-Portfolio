@@ -78,6 +78,44 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             ],
             stack: ["PWM Engine", "Vector Logic", "H-Bridge Control", "ESP32"]
         },
+        "Nexora GS-1": {
+            description: "An advanced human-robot interaction system using 21-point hand landmarker tracking for zero-latency gesture control in sterile or hazardous environments.",
+            challenge: "Stabilizing robotic motion from jittery hand data while maintaining high inference speed and industrial-grade accuracy.",
+            solution: "Engineered a three-phase architecture: Perception (MediaPipe), Logic (Flask-SocketIO), and Actuation (Arduino), stabilized by a custom HCFV filter.",
+            stats: [
+                { label: "Inference", value: "32ms" },
+                { label: "Accuracy", value: "98.4%" },
+                { label: "Command", value: "4ms" }
+            ],
+            stack: ["MediaPipe", "Socket.IO", "Flask", "React", "Arduino", "HCFV Filter"],
+            gallery: [
+                { url: "/gallery/techfusion/interface.jpg", label: "Tactical HUD" },
+                { url: "/gallery/techfusion/login.jpg", label: "Secure Access" },
+                { url: "/gallery/techfusion/prototype.jpg", label: "Hardware Architecture" }
+            ]
+        },
+        "The Space": {
+            description: "An immersive, high-conversion digital experience for a luxury concept restaurant, prioritizing atmospheric storytelling and instant booking.",
+            challenge: "Creating a cinematic web experience that loads instantly on mobile without compromising on visual fidelity or smooth parallax effects.",
+            solution: "Optimized the entire asset pipeline using AVIF/WebP formats and implemented a custom lazy-loading strategy that prioritizes above-the-fold storytelling elements.",
+            stats: [
+                { label: "LCP Score", value: "0.6s" },
+                { label: "SEO Score", value: "100%" },
+                { label: "Bookings", value: "+25%" }
+            ],
+            stack: ["Framer Motion", "Vite", "Image Proxying", "React"]
+        },
+        "AR Associate": {
+            description: "A specialized SaaS platform for AR (Accounts Receivable) automation, designed to streamline corporate debt recovery and field agent tracking.",
+            challenge: "Synchronizing high-frequency field agent data with a centralized ERP while maintaining data integrity across spotty network connections.",
+            solution: "Implemented a robust Offline-First architecture using IndexedDB for local persistence and a background sync worker that reconciles transactions once connectivity is restored.",
+            stats: [
+                { label: "Sync Latency", value: "<2s" },
+                { label: "Uptime", value: "99.9%" },
+                { label: "Efficiency", value: "+40%" }
+            ],
+            stack: ["React", "Node.js", "IndexedDB", "PostgreSQL", "Worker Threads"]
+        },
         "default": {
             description: "Bespoke digital solution architected as a freelance consultant, focusing on scalability and performance.",
             challenge: "Translating complex client requirements into an intuitive and fast digital product.",
@@ -92,6 +130,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
     };
 
     const projectData = details[project.title] || details["default"];
+    const isIoT = project.type === 'iot';
 
     return (
         <AnimatePresence mode="wait">
@@ -102,14 +141,14 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={handleBackdropClick}
-                    className="fixed inset-0 z-[300] flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-3xl cursor-none"
+                    className="fixed inset-0 z-[300] flex items-center justify-center p-0 md:p-8 bg-black/90 backdrop-blur-3xl cursor-none"
                 >
                     <motion.div 
                         initial={{ y: 30, opacity: 0, scale: 0.98 }}
                         animate={{ y: 0, opacity: 1, scale: 1 }}
                         exit={{ y: 30, opacity: 0, scale: 0.98 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="relative w-full max-w-5xl h-[90vh] bg-[#0c0c0c]/80 border border-white/10 rounded-[2rem] shadow-3xl flex flex-col md:flex-row overflow-hidden isolate cursor-default"
+                        className="relative w-full max-w-5xl h-full md:h-[90vh] bg-[#0c0c0c] md:bg-[#0c0c0c]/80 border-none md:border md:border-white/10 rounded-none md:rounded-[2rem] shadow-3xl flex flex-col md:flex-row overflow-hidden isolate cursor-default"
                     >
                         {/* Elegant Close Button Only */}
                         <button 
@@ -122,11 +161,11 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                         {/* Image Half */}
                         <div className="w-full md:w-[40%] h-[30vh] md:h-auto relative overflow-hidden flex-shrink-0">
                            <motion.img 
-                               initial={{ scale: 1.1, opacity: 0 }}
-                               animate={{ scale: 1, opacity: 1 }}
-                               transition={{ duration: 1 }}
-                               src={project.image} 
-                               className="w-full h-full object-cover"
+                                initial={{ scale: 1.1, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ duration: 1 }}
+                                src={project.image} 
+                                className="w-full h-full object-cover"
                            />
                            <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent hidden md:block" />
                            
@@ -142,10 +181,10 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                         </div>
 
                         {/* Content Half */}
-                        <div className="w-full md:w-[60%] p-8 md:p-12 lg:p-16 overflow-y-auto flex flex-col scrollbar-hide">
+                        <div className="w-full md:w-[60%] p-6 md:p-12 lg:p-16 overflow-y-auto flex flex-col bg-[#0c0c0c]" data-lenis-prevent>
                             <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <span className="text-[9px] uppercase tracking-[0.3em] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">Project Detail</span>
+                                    <span className="text-[9px] uppercase tracking-[0.3em] font-black text-rose-700 bg-rose-800/10 px-2.5 py-1 rounded">Project Detail</span>
                                     {project.isStared && (
                                         <span className="flex items-center gap-2 text-[9px] uppercase font-black text-yellow-500 px-2.5 py-1 rounded bg-yellow-500/10 border border-yellow-500/20">
                                             <Star size={10} fill="currentColor" /> Stared Flagship
@@ -185,7 +224,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                             {/* Indicators */}
                                             <div className="absolute -bottom-6 flex gap-1">
                                                 {projectData.gallery.map((_, i) => (
-                                                    <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i === galleryIndex ? 'w-8 bg-emerald-500' : 'w-2 bg-white/10'}`} />
+                                                    <div key={i} className={`h-1 rounded-full transition-all duration-500 ${i === galleryIndex ? 'w-8 bg-rose-800' : 'w-2 bg-white/10'}`} />
                                                 ))}
                                             </div>
                                         </div>
@@ -205,7 +244,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                     {/* Problem Statement */}
                                     <div className="group/item">
                                         <div className="flex items-center gap-4 mb-4">
-                                            <div className="w-8 h-px bg-emerald-500/50" />
+                                            <div className="w-8 h-px bg-rose-800/50" />
                                             <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40">The Challenge //</h4>
                                         </div>
                                         <p className="text-white/80 text-sm md:text-base leading-relaxed font-light">
@@ -242,9 +281,11 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-auto border-t border-white/5">
-                                <a href={project.link} target="_blank" rel="noreferrer" className="flex-1 px-8 py-4 bg-white text-black text-[11px] font-black uppercase tracking-widest text-center rounded-full hover:bg-emerald-500 hover:text-white transition-all shadow-xl">
-                                    Launch Project
-                                </a>
+                                {!isIoT && project.link !== "#" && (
+                                    <a href={project.link} target="_blank" rel="noreferrer" className="flex-1 px-8 py-4 bg-white text-black text-[11px] font-black uppercase tracking-widest text-center rounded-full hover:bg-rose-800 hover:text-white transition-all shadow-xl">
+                                        Launch Project
+                                    </a>
+                                )}
                                 <button onClick={onNext} className="flex-1 px-8 py-4 border border-white/10 text-white/50 text-[11px] font-black uppercase tracking-widest rounded-full hover:bg-white/5 transition-all">
                                     Next Works
                                 </button>

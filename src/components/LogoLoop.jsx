@@ -59,7 +59,7 @@ const LogoLoop = () => {
                      ${skill.invertDark ? 'invert opacity-20 group-hover:opacity-100' : 'grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-100 scale-90 group-hover:scale-110 drop-shadow-none group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]'}`} 
                  />
               ) : skill.IconElement ? (
-                 <skill.IconElement className="w-12 h-12 md:w-16 md:h-16 text-white/30 group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-500 ease-out" strokeWidth={1.5} />
+                 <skill.IconElement className="w-12 h-12 md:w-16 md:h-16 text-white/30 group-hover:text-rose-700 group-hover:scale-110 transition-all duration-500 ease-out" strokeWidth={1.5} />
               ) : null}
               <span className="text-3xl md:text-5xl font-bold tracking-tighter text-white/20 group-hover:text-white transition-colors duration-500 whitespace-nowrap">
                 {skill.name}
