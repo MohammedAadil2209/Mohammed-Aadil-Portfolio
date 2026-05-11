@@ -4,9 +4,10 @@
 
 @layer base {
   body {
-    background-color: #121212;
+    background-color: #050505;
     color: #ffffff;
     overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   }
 }
 
@@ -23,4 +24,277 @@ html {
 /* General Link hover behavior */
 a, button {
   cursor: none;
+}
+
+/* ═══════════════════════════════════════════
+   GLASSMORPHISM & NEON UTILITY CLASSES
+   ═══════════════════════════════════════════ */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 
+              inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.neon-glow-rose {
+  box-shadow: 0 0 20px rgba(136, 19, 55, 0.3),
+              0 0 40px rgba(136, 19, 55, 0.15),
+              0 0 80px rgba(136, 19, 55, 0.05);
+}
+
+.neon-glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3),
+              0 0 40px rgba(6, 182, 212, 0.15),
+              0 0 80px rgba(6, 182, 212, 0.05);
+}
+
+.neon-text-rose {
+  text-shadow: 0 0 10px rgba(136, 19, 55, 0.5),
+               0 0 20px rgba(136, 19, 55, 0.3);
+}
+
+.neon-text-cyan {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5),
+               0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+/* ═══════════════════════════════════════════
+   FLOATING BACKGROUND PARTICLES
+   ═══════════════════════════════════════════ */
+
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
+  25% { transform: translateY(-30px) translateX(15px) scale(1.1); opacity: 0.5; }
+  50% { transform: translateY(-60px) translateX(-10px) scale(0.9); opacity: 0.2; }
+  75% { transform: translateY(-30px) translateX(20px) scale(1.05); opacity: 0.4; }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.1; }
+  100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+@keyframes grid-scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes counter-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS
+   ═══════════════════════════════════════════ */
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   PREMIUM SECTION TRANSITIONS
+   ═══════════════════════════════════════════ */
+
+.section-divider {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(180deg, transparent 0%, #050505 100%);
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(180deg, transparent, rgba(136, 19, 55, 0.5), transparent);
+}
+
+/* ═══════════════════════════════════════════
+   FUTURISTIC GRID BACKGROUND
+   ═══════════════════════════════════════════ */
+
+.futuristic-grid {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ═══════════════════════════════════════════
+   TIMELINE STYLES
+   ═══════════════════════════════════════════ */
+
+.timeline-connector {
+  position: relative;
+}
+
+.timeline-connector::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, 
+    rgba(136, 19, 55, 0.6), 
+    rgba(136, 19, 55, 0.2), 
+    transparent
+  );
+}
+
+@media (min-width: 768px) {
+  .timeline-connector::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   STAT COUNTER STYLES
+   ═══════════════════════════════════════════ */
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(136, 19, 55, 0.1) 25%,
+    transparent 50%
+  );
+  animation: orbit 8s linear infinite;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   SKILL BADGE STYLES
+   ═══════════════════════════════════════════ */
+
+.skill-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.skill-badge:hover::after {
+  left: 100%;
+}
+
+/* ═══════════════════════════════════════════
+   EXPERIENCE CARD STYLES
+   ═══════════════════════════════════════════ */
+
+.experience-card {
+  position: relative;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.experience-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(136, 19, 55, 0.3),
+    transparent 40%,
+    transparent 60%,
+    rgba(6, 182, 212, 0.2)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.experience-card:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   SHINE ANIMATION FOR NAV
+   ═══════════════════════════════════════════ */
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVENESS OVERRIDES
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* Selection styles */
+::selection {
+  background-color: rgba(136, 19, 55, 0.4);
+  color: #ffffff;
 }

@@ -14,6 +14,8 @@ import ContactSection from './components/ContactSection';
 import FloatingContactBtn from './components/FloatingContactBtn';
 import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
+import StatsCounter from './components/StatsCounter';
+import FloatingParticles from './components/FloatingParticles';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,6 +51,7 @@ function App() {
     <>
       <Preloader progress={loadingProgress} isLoaded={isLoaded} />
       <CustomCursor />
+      <FloatingParticles />
       
       <main className="relative w-full bg-[#050505]">
         <NavBar isProjectOpen={isProjectOpen} />
@@ -64,6 +67,9 @@ function App() {
           <AboutSection />
         </div>
 
+        {/* Statistics Counters */}
+        <StatsCounter />
+
         {/* Infinite Skills Marquee (Logo Loop) */}
         <LogoLoop />
 
@@ -75,11 +81,13 @@ function App() {
           <ThreeViewer />
         </div>
 
-        {/* Experience & Achievements Timeline */}
+        {/* Journey & Experience Section (Modified ExperienceTimeline) */}
         <ExperienceTimeline />
 
         {/* Post-Scroll Premium Projects Grid */}
-        <ProjectsArchive onProjectStateChange={(isOpen) => setIsProjectOpen(isOpen)} />
+        <div id="projects">
+          <ProjectsArchive onProjectStateChange={(isOpen) => setIsProjectOpen(isOpen)} />
+        </div>
 
         {/* Global Footer and Interactive Contact Cards */}
         <ContactSection />

@@ -200,14 +200,16 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                                 <motion.div 
                                     onClick={() => setView("web")}
                                     whileHover={{ scale: 0.98 }}
-                                    className="relative h-[400px] md:h-full rounded-[3rem] overflow-hidden border border-white/5 cursor-pointer group bg-[#0c0c0c]"
+                                    className="relative h-[400px] md:h-full rounded-[3rem] overflow-hidden border border-white/5 cursor-pointer group bg-[#0c0c0c] hover:border-rose-800/30 transition-all duration-700 hover:shadow-[0_0_50px_rgba(136,19,55,0.2)]"
                                 >
                                     <div className="absolute inset-0 z-0">
                                         <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2400&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-60 transition-all duration-1000" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                                        {/* Hover Glow */}
+                                        <div className="absolute inset-0 bg-rose-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                                     </div>
                                     <div className="absolute inset-0 p-12 flex flex-col justify-end z-10 pointer-events-none text-left">
-                                        <span className="text-rose-800 font-mono text-[10px] tracking-[0.3em] uppercase mb-4">Web // Solutions Engineer</span>
+                                        <span className="text-rose-800 font-mono text-[10px] tracking-[0.3em] uppercase mb-4 neon-text-rose">Web // Solutions Engineer</span>
                                         <h3 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">Web <br /> Development</h3>
                                         <p className="mt-6 text-white/40 text-[10px] uppercase tracking-widest translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700">Enter Domain →</p>
                                     </div>
@@ -216,14 +218,16 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                                 <motion.div 
                                     onClick={() => setView("iot")}
                                     whileHover={{ scale: 0.98 }}
-                                    className="relative h-[400px] md:h-full rounded-[3rem] overflow-hidden border border-white/5 cursor-pointer group bg-[#0c0c0c]"
+                                    className="relative h-[400px] md:h-full rounded-[3rem] overflow-hidden border border-white/5 cursor-pointer group bg-[#0c0c0c] hover:border-cyan-800/30 transition-all duration-700 hover:shadow-[0_0_50px_rgba(6,182,212,0.1)]"
                                 >
                                     <div className="absolute inset-0 z-0">
                                         <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2000&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-60 transition-all duration-1000" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                                        {/* Hover Glow */}
+                                        <div className="absolute inset-0 bg-cyan-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                                     </div>
                                     <div className="absolute inset-0 p-12 flex flex-col justify-end z-10 pointer-events-none">
-                                        <span className="text-blue-500 font-mono text-[10px] tracking-[0.3em] uppercase mb-4">IoT // Embedded Ecosystems</span>
+                                        <span className="text-blue-500 font-mono text-[10px] tracking-[0.3em] uppercase mb-4 neon-text-cyan">IoT // Embedded Ecosystems</span>
                                         <h3 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">Integrated <br /> Systems</h3>
                                         <p className="mt-6 text-white/40 text-[10px] uppercase tracking-widest translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700">Enter Domain →</p>
                                     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
 
 const HeroSequence = ({ onProgress, onLoaded }) => {
   const canvasRef = useRef(null);
@@ -132,14 +133,52 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
             className="absolute inset-0 flex flex-col items-center justify-center z-0 pointer-events-none select-none px-4"
             style={{ willChange: "transform, opacity" }}
         >
-          <h1 className="text-[16vw] md:text-[12vw] font-black tracking-tighter text-white/90 leading-[0.8] whitespace-nowrap drop-shadow-2xl text-center">
+          <motion.h1 
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[16vw] md:text-[12vw] font-black tracking-tighter text-white/90 leading-[0.8] whitespace-nowrap drop-shadow-2xl text-center"
+          >
             MOHAMMED <br className="md:hidden" /> AADIL
-          </h1>
-          <p className="text-[8px] sm:text-[10px] md:text-[1.2vw] font-mono tracking-[0.3em] md:tracking-[0.5em] text-rose-800/80 uppercase mt-4 md:mt-8 text-center max-w-5xl leading-relaxed flex flex-wrap justify-center gap-1 md:gap-2">
-            <span>System Architect</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
-            <span>Full-Stack Engineer</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
-            <span>Hardware & Embedded Systems</span>
-          </p>
+          </motion.h1>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="flex flex-col items-center"
+          >
+            <p className="text-[8px] sm:text-[10px] md:text-[1.2vw] font-mono tracking-[0.3em] md:tracking-[0.5em] text-rose-800/80 uppercase mt-4 md:mt-8 text-center max-w-5xl leading-relaxed flex flex-wrap justify-center gap-1 md:gap-2">
+              <span>System Architect</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
+              <span>Full-Stack Engineer</span> <span className="hidden md:inline">&nbsp;&bull;&nbsp;</span><span className="md:hidden">|</span>
+              <span>Hardware & Embedded Systems</span>
+            </p>
+
+            {/* Quick Access CTAs */}
+            <div className="mt-12 flex gap-4 pointer-events-auto">
+              <a 
+                href="/Mohammed%20Aadil.pdf" 
+                download="Mohammed_Aadil_Resume.pdf"
+                className="group relative px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full overflow-hidden transition-all duration-500 hover:border-white/30"
+              >
+                <div className="absolute inset-0 bg-white translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 rounded-full" />
+                <span className="relative z-10 text-xs font-bold uppercase tracking-widest text-white mix-blend-difference">
+                  Download Résumé
+                </span>
+              </a>
+              
+              <a 
+                href="#contact"
+                className="group p-4 bg-rose-800/20 backdrop-blur-xl border border-rose-800/30 rounded-full hover:bg-rose-800/40 transition-all duration-500"
+              >
+                <span className="text-white group-hover:scale-110 transition-transform inline-block">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </motion.div>
         </div>
 
         {/* 3D Sequence Canvas OVER the Text */}
