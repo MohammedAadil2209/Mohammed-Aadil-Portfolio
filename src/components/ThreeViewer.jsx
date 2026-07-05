@@ -96,6 +96,12 @@ const ThreeViewer = () => {
         const clock = new THREE.Clock();
 
         const animate = () => {
+            if (currentMount && currentMount.getBoundingClientRect().top > window.innerHeight || currentMount.getBoundingClientRect().bottom < 0) {
+                 // Optimization: Skip rendering if out of viewport
+                 animationFrameId = requestAnimationFrame(animate);
+                 return;
+            }
+
             const time = clock.getElapsedTime();
             group.rotation.y = time * 0.03;
             objects.forEach(obj => {

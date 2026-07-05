@@ -14,24 +14,52 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
   useEffect(() => {
     const imageUrls = Array.from({ length: totalFrames }, (_, i) => {
       const index = String(i).padStart(3, '0');
-      return `/sequence/frame_${index}_delay-0.041s.png`;
+      return `/sequence/frame_${index}_delay-0.041s.webp`;
     });
 
-    // Immediate unblocking for smoother initial feel
-    onProgress(100);
-    onLoaded();
+    // Load first frame immediately for FCP
+    const firstImg = new Image();
+    firstImg.src = imageUrls[0];
+    firstImg.onload = () => {
+      imagesRef.current[0] = firstImg;
+      renderFrame(0);
+      onProgress(100);
+      onLoaded();
+      
+      // Start idle loading for the rest
+      loadRemainingImages();
+    };
 
-    const loadImages = async () => {
-      for (let i = 0; i < totalFrames; i++) {
-        const img = new Image();
-        img.src = imageUrls[i];
-        img.onload = () => {
-          imagesRef.current[i] = img;
-          if (i === 0) renderFrame(0);
-        };
+    const loadRemainingImages = () => {
+      let currentIndex = 1;
+      
+      const loadNextChunk = (deadline) => {
+        // Load frames as long as the browser is idle
+        while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && currentIndex < totalFrames) {
+          const i = currentIndex;
+          const img = new Image();
+          img.src = imageUrls[i];
+          img.onload = () => {
+            imagesRef.current[i] = img;
+          };
+          currentIndex++;
+        }
+        
+        if (currentIndex < totalFrames) {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadNextChunk);
+          } else {
+            setTimeout(() => loadNextChunk({ timeRemaining: () => 5 }), 50);
+          }
+        }
+      };
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadNextChunk);
+      } else {
+        setTimeout(() => loadNextChunk({ timeRemaining: () => 5 }), 50);
       }
     };
-    loadImages();
 
     // Prepare renderer once
     resizeCanvas();
@@ -67,7 +95,18 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext('2d');
-    const img = imagesRef.current[index];
+    
+    let img = imagesRef.current[index];
+    if (!img) {
+      // Find the closest loaded frame looking backwards
+      for (let i = index - 1; i >= 0; i--) {
+        if (imagesRef.current[i]) {
+          img = imagesRef.current[i];
+          break;
+        }
+      }
+    }
+    
     if (!img || !context) return;
 
     const w = window.innerWidth;

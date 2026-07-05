@@ -236,6 +236,8 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
                 src={event.heroImage}
                 alt={event.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-[0.16,1,0.3,1]"
+                loading="lazy"
+                decoding="async"
               />
 
               {/* Card Bottom Read More action */}
@@ -641,6 +643,8 @@ const ExperienceTimeline = () => {
                               src={typeof item === "string" ? item : item.url}
                               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1s] ease-[0.16,1,0.3,1]"
                               alt={item.caption || "Event visual evidence"}
+                              loading="lazy"
+                              decoding="async"
                             />
                           </div>
                           {item.caption && (

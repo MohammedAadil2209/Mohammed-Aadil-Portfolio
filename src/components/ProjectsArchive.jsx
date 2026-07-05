@@ -58,6 +58,8 @@ const ProjectCard = ({ title, category, link, index, image, isStared, onOpen }) 
                         src={image} 
                         alt={title} 
                         className="w-full h-full object-cover scale-110 group-hover:scale-100 opacity-40 group-hover:opacity-100 grayscale-[40%] group-hover:grayscale-0 transition-all duration-1000"
+                        loading="lazy"
+                        decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none opacity-80" />
                 </div>
@@ -203,7 +205,7 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                                     className="relative h-[400px] md:h-full rounded-[3rem] overflow-hidden border border-white/5 cursor-pointer group bg-[#0c0c0c] hover:border-rose-800/30 transition-all duration-700 hover:shadow-[0_0_50px_rgba(136,19,55,0.2)]"
                                 >
                                     <div className="absolute inset-0 z-0">
-                                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2400&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-60 transition-all duration-1000" />
+                                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2400&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-60 transition-all duration-1000" loading="lazy" decoding="async" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                                         {/* Hover Glow */}
                                         <div className="absolute inset-0 bg-rose-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -221,7 +223,7 @@ const ProjectsArchive = ({ onProjectStateChange }) => {
                                     className="relative h-[400px] md:h-full rounded-[3rem] overflow-hidden border border-white/5 cursor-pointer group bg-[#0c0c0c] hover:border-cyan-800/30 transition-all duration-700 hover:shadow-[0_0_50px_rgba(6,182,212,0.1)]"
                                 >
                                     <div className="absolute inset-0 z-0">
-                                        <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2000&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-60 transition-all duration-1000" />
+                                        <img src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2000&auto=format&fit=crop" className="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:opacity-60 transition-all duration-1000" loading="lazy" decoding="async" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                                         {/* Hover Glow */}
                                         <div className="absolute inset-0 bg-cyan-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />

@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NavBar from './components/NavBar';
 import HeroSequence from './components/HeroSequence';
-import AboutSection from './components/AboutSection';
-import LogoLoop from './components/LogoLoop';
-import ServicesSection from './components/ServicesSection';
-import ThreeViewer from './components/ThreeViewer';
-import ExperienceTimeline from './components/ExperienceTimeline';
-import ProjectsArchive from './components/ProjectsArchive';
-import ContactSection from './components/ContactSection';
-import FloatingContactBtn from './components/FloatingContactBtn';
 import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
-import StatsCounter from './components/StatsCounter';
 import FloatingParticles from './components/FloatingParticles';
+
+const DeferredContent = lazy(() => import('./components/DeferredContent'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,38 +55,10 @@ function App() {
           onLoaded={() => setIsLoaded(true)} 
         />
         
-        {/* Parallax Interstitial Text Sections */}
-        <div id="about">
-          <AboutSection />
-        </div>
-
-        {/* Statistics Counters */}
-        <StatsCounter />
-
-        {/* Infinite Skills Marquee (Logo Loop) */}
-        <LogoLoop />
-
-        {/* Services / Ecosystem */}
-        <ServicesSection />
-        
-        {/* WebGL 3D Interactive Scene Section */}
-        <div id="threeviewer">
-          <ThreeViewer />
-        </div>
-
-        {/* Journey & Experience Section (Modified ExperienceTimeline) */}
-        <ExperienceTimeline />
-
-        {/* Post-Scroll Premium Projects Grid */}
-        <div id="projects">
-          <ProjectsArchive onProjectStateChange={(isOpen) => setIsProjectOpen(isOpen)} />
-        </div>
-
-        {/* Global Footer and Interactive Contact Cards */}
-        <ContactSection />
-        
-        {/* Persistent Floating Action Button */}
-        <FloatingContactBtn />
+        {/* Lazy Loaded Below-the-fold content */}
+        <Suspense fallback={null}>
+          <DeferredContent onProjectStateChange={(isOpen) => setIsProjectOpen(isOpen)} />
+        </Suspense>
       </main>
     </>
   );
