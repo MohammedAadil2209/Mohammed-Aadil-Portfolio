@@ -6,6 +6,7 @@ import devArenaCert from '../../certificates/dev-arena-hackathon.jpeg';
 import iitMadrasCert from '../../certificates/iit-madras-workshop.png';
 import nationalsummitcert from '../../certificates/national-summit-ai.png';
 import techFusionCert from '../../certificates/techfusion-certificate.png';
+import siemensCert from '../../certificates/siemens-certificate.jpg';
 
 
 const EVENTS = [
@@ -131,6 +132,34 @@ const WORK_EXPERIENCE_EVENTS = [
     gallery: [
       { url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop", caption: "Robotics Development Phase" },
       { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop", caption: "Embedded Logic Testing" }
+    ]
+  },
+  {
+    id: 'work-2',
+    title: "Industrial Automation Intern (Siemens S7-1200 PLC)",
+    organization: "Siemens Centre of Excellence (SCoE-MIT)",
+    organizationLink: "https://www.scoe.mitindia.edu/research",
+    association: "Anna University, MIT Campus - Dept. of Instrumentation Engineering",
+    associationLink: "https://www.scoe.mitindia.edu/",
+    type: "Internship",
+    tag: "Siemens CoE, MIT Anna University | 29th June 2026 - 10th July 2026",
+    overview: "Completed an intensive 100% physical offline summer internship at the Siemens Centre of Excellence (SCoE-MIT), Madras Institute of Technology, Anna University in collaboration with the Department of Instrumentation Engineering. The program focused on Industrial Automation using Siemens S7-1200 PLC systems, incorporating course materials, hands-on programming tasks, theory & lab practicals, hardware assessments, and industrial project execution.",
+    role: "Programmed Siemens S7-1200 PLCs using TIA Portal (Totally Integrated Automation). Configured digital and analog I/O modules, wired physical sensors, relays, and actuators, engineered Ladder Logic (LAD) control sequences, and conducted diagnostic hardware troubleshooting and system validation.",
+    learnings: [
+      "Siemens S7-1200 PLC hardware architecture & TIA Portal software environment",
+      "Ladder Logic (LAD) programming, timers, counters, and memory bit management",
+      "Interfacing industrial sensors, relay circuits, and electric actuators",
+      "Real-time diagnostic troubleshooting, safety interlocks, and hardware testing",
+      "Comprehensive evaluation via hands-on assessments and project work"
+    ],
+    skills: ["Siemens S7-1200 PLC", "TIA Portal", "Industrial Automation", "Ladder Logic (LAD)", "Hardware-in-the-Loop", "Instrumentation", "Mechatronics", "Sensors & Actuators"],
+    impact: "Secured an outstanding A+ Grade with a 89% score (Certificate No: 2026-IA-S3-07), demonstrating high proficiency in industrial automation and programmable logic controllers.",
+    heroImage: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000&auto=format&fit=crop",
+    certificate: siemensCert,
+    certificatePdf: "/siemens-certificate.pdf",
+    gallery: [
+      { url: siemensCert, caption: "Official Siemens Internship Certificate (A+ Grade | 89% Score)" },
+      { url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=2000&auto=format&fit=crop", caption: "Siemens S7-1200 Industrial Automation Workstation" }
     ]
   }
 ];
@@ -584,28 +613,41 @@ const ExperienceTimeline = () => {
 
                     {/* Certificate Action Button - Only show if certificate exists */}
                     {selectedEvent.certificate ? (
-                      <motion.a
-                        href={selectedEvent.certificate}
-                        target="_blank"
-                        rel="noreferrer"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.6 }}
-                        className="flex items-center gap-6 bg-rose-800/10 hover:bg-rose-800/20 border border-rose-800/20 hover:border-rose-800/50 rounded-3xl p-6 transition-all duration-300 group cursor-none hover-magnetic outline-none"
-                      >
-                        <div className="w-14 h-14 shrink-0 rounded-full bg-rose-800/20 flex items-center justify-center text-rose-700 group-hover:bg-rose-800 group-hover:text-[#050505] transition-colors duration-300 shadow-[0_0_20px_rgba(136, 19, 55,0.2)]">
-                          <Award className="w-6 h-6" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-rose-700 font-bold uppercase tracking-[0.2em] text-[10px] mb-1">
-                            Official Document
-                          </span>
-                          <span className="text-white text-sm md:text-base font-semibold group-hover:text-white/80 transition-colors">
-                            View Certificate Image ↗
-                          </span>
-                        </div>
-                      </motion.a>
+                      <div className="flex flex-col gap-3">
+                        <motion.a
+                          href={selectedEvent.certificate}
+                          target="_blank"
+                          rel="noreferrer"
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.6 }}
+                          className="flex items-center gap-6 bg-rose-800/10 hover:bg-rose-800/20 border border-rose-800/20 hover:border-rose-800/50 rounded-3xl p-6 transition-all duration-300 group cursor-none hover-magnetic outline-none"
+                        >
+                          <div className="w-14 h-14 shrink-0 rounded-full bg-rose-800/20 flex items-center justify-center text-rose-700 group-hover:bg-rose-800 group-hover:text-[#050505] transition-colors duration-300 shadow-[0_0_20px_rgba(136, 19, 55,0.2)]">
+                            <Award className="w-6 h-6" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-rose-700 font-bold uppercase tracking-[0.2em] text-[10px] mb-1">
+                              Official Document
+                            </span>
+                            <span className="text-white text-sm md:text-base font-semibold group-hover:text-white/80 transition-colors">
+                              View Certificate Image ↗
+                            </span>
+                          </div>
+                        </motion.a>
+
+                        {selectedEvent.certificatePdf && (
+                          <a
+                            href={selectedEvent.certificatePdf}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center justify-center gap-2 p-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white text-xs font-semibold uppercase tracking-widest transition-all"
+                          >
+                            <span>Download Official PDF Certificate ↗</span>
+                          </a>
+                        )}
+                      </div>
                     ) : (
                       <div className="flex items-center gap-6 bg-white/[0.02] border border-white/5 rounded-3xl p-6 opacity-60">
                         <div className="w-14 h-14 shrink-0 rounded-full bg-white/5 flex items-center justify-center text-white/20">
@@ -616,7 +658,7 @@ const ExperienceTimeline = () => {
                             Status
                           </span>
                           <span className="text-white/50 text-sm md:text-base font-semibold">
-                            Certificate Pending Completion
+                            Program Completed Successfully
                           </span>
                         </div>
                       </div>

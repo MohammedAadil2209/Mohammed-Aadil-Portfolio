@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Wifi } from 'lucide-react';
+import { Cpu, Wifi, Wrench } from 'lucide-react';
 
 const SKILLS = [
   { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
@@ -14,6 +14,7 @@ const SKILLS = [
   { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
   { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
   { name: "Embedded Systems", IconElement: Cpu },
+  { name: "Industrial Automation", IconElement: Wrench },
   { name: "IoT", IconElement: Wifi },
   { name: "C Programming", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" },
   { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" }

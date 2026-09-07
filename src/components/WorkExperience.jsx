@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Briefcase, Building2, Calendar, MapPin, Cpu, Lightbulb, Users, Wrench } from 'lucide-react';
+import { Briefcase, Building2, Calendar, MapPin, Cpu, Lightbulb, Users, Wrench, Trophy, Award } from 'lucide-react';
 
 const WORK_EXPERIENCE = [
   {
@@ -25,6 +25,30 @@ const WORK_EXPERIENCE = [
       { icon: Lightbulb, text: "AI Innovation" },
       { icon: Users, text: "Team Lead" },
       { icon: Wrench, text: "Prototyping" }
+    ]
+  },
+  {
+    id: 2,
+    role: "Industrial Automation Intern (Siemens S7-1200 PLC)",
+    company: "Siemens Centre of Excellence (SCoE-MIT)",
+    association: "Anna University, MIT Campus - Dept. of Instrumentation Engineering",
+    location: "Chennai, India",
+    duration: "29 June 2026 - 10 July 2026",
+    type: "Internship",
+    description: "Completed an intensive 100% physical offline summer internship program focused on Siemens S7-1200 PLC architecture, TIA Portal programming, and industrial mechatronics control.",
+    responsibilities: [
+      "Programmed Siemens S7-1200 PLCs using TIA Portal & Ladder Logic (LAD)",
+      "Configured digital/analog I/O hardware, industrial sensors, relays, and actuators",
+      "Engineered hardware-in-the-loop automation sequences and safety interlocks",
+      "Executed hands-on lab practicals, theory assessments, and industrial project evaluation",
+      "Achieved A+ Grade with an 89% overall score (Certificate No: 2026-IA-S3-07)"
+    ],
+    techStack: ["Siemens S7-1200 PLC", "TIA Portal", "Industrial Automation", "Ladder Logic", "Mechatronics", "Instrumentation"],
+    highlights: [
+      { icon: Cpu, text: "S7-1200 PLC" },
+      { icon: Wrench, text: "TIA Portal" },
+      { icon: Trophy, text: "A+ Grade (89%)" },
+      { icon: Award, text: "SCoE MIT Campus" }
     ]
   }
 ];
