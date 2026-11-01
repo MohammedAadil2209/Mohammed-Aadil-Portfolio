@@ -12,6 +12,10 @@ const DeferredContent = lazy(() => import('./components/DeferredContent'));
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Prevent ScrollTrigger from refreshing (and causing a jump) when mobile
+// browser address bars show/hide during scroll.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);

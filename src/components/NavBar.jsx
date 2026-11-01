@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 
 const NavBar = ({ isProjectOpen }) => {
@@ -6,22 +6,40 @@ const NavBar = ({ isProjectOpen }) => {
   const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const scrollRaf = useRef(null);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious();
-    
-    if (latest > 80) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
 
-    if (latest > previous && latest > 200) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
+    // Throttle the state updates to at most one per animation frame. Lenis
+    // fires scroll events many times per frame; updating state on every one
+    // forces a re-render per pixel, which is what makes scrolling feel stuck.
+    if (scrollRaf.current !== null) return;
+    scrollRaf.current = requestAnimationFrame(() => {
+      scrollRaf.current = null;
+
+      if (latest > 80) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+
+      if (latest > previous && latest > 200) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+    });
   });
+
+  useEffect(() => {
+    return () => {
+      if (scrollRaf.current !== null) {
+        cancelAnimationFrame(scrollRaf.current);
+        scrollRaf.current = null;
+      }
+    };
+  }, []);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navLinks = ['About', 'Resume', 'Services', 'Projects', 'Contact'];
@@ -122,6 +140,21 @@ const NavBar = ({ isProjectOpen }) => {
 
         {/* Right Section: Mobile Toggle + CTA */}
         <div className="flex-1 flex justify-end items-center gap-4">
+          {/* Availability Pin */}
+          <a
+            href="#contact"
+            className="group flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-xl cursor-none outline-none transition-colors duration-500 hover:border-white/25 hover:bg-white/[0.06]"
+            aria-label="Available for work — get in touch"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-700 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-800"></span>
+            </span>
+            <span className="hidden sm:inline text-[10px] font-bold uppercase tracking-[0.15em] text-white/60 group-hover:text-white transition-colors duration-300 whitespace-nowrap">
+              Available for Work
+            </span>
+          </a>
+
           <a 
             href="https://nexora-devstudio.vercel.app/" 
             target="_blank" 

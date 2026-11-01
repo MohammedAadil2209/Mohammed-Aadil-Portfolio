@@ -94,28 +94,63 @@ const ThreeViewer = () => {
 
         let animationFrameId;
         const clock = new THREE.Clock();
+        let elapsed = 0;
+        let isRunning = false;
+        let isOnScreen = true;
 
         const animate = () => {
-            if (currentMount && currentMount.getBoundingClientRect().top > window.innerHeight || currentMount.getBoundingClientRect().bottom < 0) {
-                 // Optimization: Skip rendering if out of viewport
-                 animationFrameId = requestAnimationFrame(animate);
-                 return;
-            }
+            if (!isRunning) return;
 
-            const time = clock.getElapsedTime();
-            group.rotation.y = time * 0.03;
+            // Accumulate delta instead of absolute time so pausing/resuming
+            // never produces a rotation jump.
+            const delta = Math.min(clock.getDelta(), 0.1);
+            elapsed += delta;
+
+            group.rotation.y = elapsed * 0.03;
             objects.forEach(obj => {
                 obj.mesh.rotation.y += obj.speed;
                 obj.mesh.rotation.x += obj.speed * 0.5;
             });
-            stars.rotation.z = time * 0.01;
+            stars.rotation.z = elapsed * 0.01;
             renderer.render(scene, camera);
             animationFrameId = requestAnimationFrame(animate);
         };
-        animate();
+
+        const play = () => {
+            if (isRunning) return;
+            isRunning = true;
+            clock.getDelta(); // discard time spent paused
+            animationFrameId = requestAnimationFrame(animate);
+        };
+
+        const pause = () => {
+            if (!isRunning) return;
+            isRunning = false;
+            cancelAnimationFrame(animationFrameId);
+        };
+
+        const updatePlayback = () => {
+            if (isOnScreen && !document.hidden) play();
+            else pause();
+        };
+
+        // Only run the WebGL loop while the section is actually visible.
+        // Previously the loop ran forever and called getBoundingClientRect()
+        // every single frame, which forced a layout on every scroll tick.
+        const visibilityObserver = new IntersectionObserver(
+            ([entry]) => {
+                isOnScreen = entry.isIntersecting;
+                updatePlayback();
+            },
+            { threshold: 0 }
+        );
+        visibilityObserver.observe(currentMount);
+
+        document.addEventListener('visibilitychange', updatePlayback);
+        updatePlayback();
 
         // Scroll Integration - Ultra Clean
-        gsap.to(stars.position, {
+        const starsTween = gsap.to(stars.position, {
             z: 30,
             ease: "none",
             scrollTrigger: {
@@ -126,7 +161,7 @@ const ThreeViewer = () => {
             }
         });
 
-        gsap.to(camera.position, {
+        const cameraTween = gsap.to(camera.position, {
             z: 6,
             ease: "none",
             scrollTrigger: {
@@ -146,7 +181,14 @@ const ThreeViewer = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            document.removeEventListener('visibilitychange', updatePlayback);
+            visibilityObserver.disconnect();
+            pause();
             cancelAnimationFrame(animationFrameId);
+            starsTween.scrollTrigger && starsTween.scrollTrigger.kill();
+            starsTween.kill();
+            cameraTween.scrollTrigger && cameraTween.scrollTrigger.kill();
+            cameraTween.kill();
             currentMount.removeChild(renderer.domElement);
             renderer.dispose();
             geometry.dispose();
@@ -170,7 +212,7 @@ const ThreeViewer = () => {
                     className="text-center"
                 >
                     <h2 className="text-5xl md:text-[8vw] font-black text-white leading-[0.9] tracking-tighter uppercase mb-6">
-                        Entering <br className="md:hidden" /> the Void
+                        Ideas Into <br className="md:hidden" /> Systems 
                     </h2>
                     <div className="h-px w-24 md:w-48 bg-rose-800/30 mx-auto" />
                 </motion.div>

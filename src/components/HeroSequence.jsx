@@ -8,6 +8,9 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
   const containerRef = useRef(null);
   const totalFrames = 192; // 0 to 191
   const imagesRef = useRef([]);
+  const lastDrawnRef = useRef(-1);
+  const pendingFrameRef = useRef(0);
+  const renderRafRef = useRef(null);
 
   const textRef = useRef(null);
 
@@ -69,6 +72,7 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      if (renderRafRef.current !== null) cancelAnimationFrame(renderRafRef.current);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
@@ -77,7 +81,9 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
+    // Cap the device pixel ratio so high-DPI / Retina screens don't allocate
+    // and repaint an unnecessarily huge canvas buffer while scrolling.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = window.innerWidth;
     const h = window.innerHeight;
 
@@ -89,9 +95,16 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.imageSmoothingEnabled = true;
     context.imageSmoothingQuality = 'high';
+
+    // Redraw the current frame at the new resolution so resizing never leaves
+    // the canvas blank until the next scroll event.
+    renderFrame(lastDrawnRef.current < 0 ? 0 : lastDrawnRef.current, true);
   };
 
-  const renderFrame = (index) => {
+  const renderFrame = (index, force = false) => {
+    // Skip redundant work when the snapped frame hasn't actually changed.
+    if (!force && index === lastDrawnRef.current) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext('2d');
@@ -108,6 +121,8 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
     }
     
     if (!img || !context) return;
+
+    lastDrawnRef.current = index;
 
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -132,6 +147,17 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
     context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
+  // Coalesce frame draws to at most one per animation frame so bursts of
+  // ScrollTrigger updates can't trigger multiple expensive canvas paints.
+  const scheduleRender = (index) => {
+    pendingFrameRef.current = index;
+    if (renderRafRef.current !== null) return;
+    renderRafRef.current = requestAnimationFrame(() => {
+      renderRafRef.current = null;
+      renderFrame(pendingFrameRef.current);
+    });
+  };
+
   const initSequence = () => {
     let currentFrame = { frame: 0 };
     
@@ -144,7 +170,7 @@ const HeroSequence = ({ onProgress, onLoaded }) => {
         start: 'top top',
         end: 'bottom bottom',
         scrub: 0.5,
-        onUpdate: () => renderFrame(currentFrame.frame)
+        onUpdate: () => scheduleRender(currentFrame.frame)
       }
     });
 
