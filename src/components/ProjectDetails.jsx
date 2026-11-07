@@ -89,7 +89,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             stack: ["PWM Engine", "Vector Logic", "H-Bridge Control", "ESP32"]
         },
         "Nexora GS-1": {
-            team: "Team Nexora · with Rahil Syed & Abdul Mateen Danish",
+            team: "Team Nexora · with Rahil & Abdul Mateen Danish",
             description: "An advanced human-robot interaction system using 21-point hand landmarker tracking for zero-latency gesture control in sterile or hazardous environments.",
             challenge: "Stabilizing robotic motion from jittery hand data while maintaining high inference speed and industrial-grade accuracy.",
             solution: "Engineered a three-phase architecture: Perception (MediaPipe), Logic (Flask-SocketIO), and Actuation (Arduino), stabilized by a custom HCFV filter.",
@@ -117,7 +117,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             stack: ["Framer Motion", "Vite", "Image Proxying", "React"]
         },
         "RESQER": {
-            team: "Team Nexora · with Rahil Syed",
+            team: "Team Nexora · with Rahil",
             description: "AI-powered emergency response and disaster coordination platform that turns scattered emergency reports into actionable intelligence. Built from scratch in 3 hours and awarded 1st Place at TECHATHON '26.",
             challenge: "During floods, fires and urban crises, distress reports arrive scattered and unstructured, and responders can't tell what is most urgent or where to send help first.",
             solution: "A dual-interface system: a panic-proof Citizen Portal (report, speak, or send a silent one-tap alert) feeds an AI triage engine that scores severity and population impact, while a Command Center shows live incidents on a zone map and recommends the next response actions.",
@@ -135,7 +135,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             ]
         },
         "ResQer InfraSight": {
-            team: "Team Nexora · with Rahil Syed",
+            team: "Team Nexora · with Rahil",
             description: "Intelligent infrastructure inspection system that goes beyond detecting defects: it understands their severity and risk and predicts what needs attention first. Won 2nd Prize at CresIgnite (Project Expo 2K26).",
             challenge: "Road inspection is slow and manual, and simply spotting a pothole or crack doesn't tell a municipality how dangerous it is, how fast it will get worse, or what to fix first.",
             solution: "A camera rover runs YOLO defect detection with OpenCV, fused with GPS, MPU6050 and ultrasonic readings. Each defect gets an Infrastructure DNA profile, AI-driven risk prioritisation and a predictive-maintenance forecast in a live municipal dashboard: Detect → Understand → Predict → Act.",
