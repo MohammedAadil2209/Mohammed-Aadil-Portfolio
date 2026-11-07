@@ -227,6 +227,42 @@ const EVENTS = [
       { url: "/gallery/talenthunt/organising-team.jpg", caption: "The CODE CANVAS organising team with faculty coordinators" },
       { url: "/gallery/talenthunt/code-canvas-live.jpg", caption: "CODE CANVAS in progress in the lab" }
     ]
+  },
+  {
+    id: 8,
+    // The certificate carries no date; the team's LinkedIn post went up on
+    // 6 Nov 2026, so the event is shown as "Nov 2026" (dates below only drive sorting).
+    startDate: "2026-11-01",
+    endDate: "2026-11-06",
+    title: "T-Hub BuildX Hackathon 2026",
+    team: "Team Nexora · with Rahil Syed",
+    gratitude: "Thank you to Rahil Syed for the collaboration, dedication and teamwork across all 36 hours. From brainstorming to debugging to the final pitch, building AeroSpectra together made this one unforgettable. 🤝",
+    organization: "T-Hub × B.S. Abdur Rahman Crescent Institute of Science and Technology",
+    association: "Crescent Innovation Incubation Council (CIIC) · AIC Crescent · Supported by Atal Innovation Mission, NITI Aayog",
+    type: "36-Hour Hackathon",
+    tag: "AeroSpectra | Nov 2026",
+    status: "Participant",
+    overview: "An intense two-day, 36-hour hackathon at T-Hub BuildX 2026. Team NEXORA presented AeroSpectra (Detect. Visualize. Document.), an AI-powered aircraft inspection and defect-monitoring platform. Every stage, from brainstorming the idea and developing the solution to debugging unexpected issues, refining the UI/UX and preparing the final presentation, pushed us to think differently and step outside our comfort zones.",
+    role: "Co-built AeroSpectra with my Team Nexora teammate Rahil Syed across the full 36 hours: shaping the idea, developing the platform, debugging under time pressure, polishing the UI/UX and preparing and delivering the final presentation.",
+    learnings: [
+      "Sustaining a full product build across a 36-hour sprint",
+      "Applying AI to a real-world inspection and defect-monitoring problem",
+      "Debugging unexpected issues quickly under pressure",
+      "Refining UI/UX so complex data is easy to act on",
+      "Connecting with other teams and learning from different approaches to problem-solving"
+    ],
+    skills: ["Artificial Intelligence", "Defect Detection", "Data Visualization", "UI/UX", "Rapid Prototyping", "Debugging", "Pitching", "Teamwork"],
+    impact: "Took home valuable lessons, new connections and memories. Grateful to B.S. Abdur Rahman Crescent Institute of Science & Technology - CIIC and T-Hub for the opportunity.",
+    heroImage: "/gallery/buildx/hackathon-workstation.jpg",
+    certificate: "/gallery/buildx/certificate.jpg",
+    linkedinPosts: [
+      { label: "View LinkedIn Post", url: "https://www.linkedin.com/feed/update/urn:li:activity:7524534867921960960/" }
+    ],
+    gallery: [
+      { url: "/gallery/buildx/certificate.jpg", caption: "Certificate of Participation - BuildX Hackathon" },
+      { url: "/gallery/buildx/hackathon-workstation.jpg", caption: "Team NEXORA's workstation during the 36-hour build" },
+      { url: "/gallery/buildx/team-certificate-pass.jpg", caption: "Team NEXORA certificates and BuildX event pass" }
+    ]
   }
 ];
 
