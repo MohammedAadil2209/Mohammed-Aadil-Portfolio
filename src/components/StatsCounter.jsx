@@ -12,7 +12,7 @@ const STATS = [
   },
   {
     label: "Events & Hackathons",
-    value: 5,
+    value: 6,
     suffix: "+",
     icon: Trophy,
     color: "from-amber-600/20 to-amber-900/5",

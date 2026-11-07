@@ -115,6 +115,41 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             ],
             stack: ["Framer Motion", "Vite", "Image Proxying", "React"]
         },
+        "RESQER": {
+            description: "AI-powered emergency response and disaster coordination platform that turns scattered emergency reports into actionable intelligence. Built from scratch in 3 hours and awarded 1st Place at TECHATHON '26.",
+            challenge: "During floods, fires and urban crises, distress reports arrive scattered and unstructured, and responders can't tell what is most urgent or where to send help first.",
+            solution: "A dual-interface system: a panic-proof Citizen Portal (report, speak, or send a silent one-tap alert) feeds an AI triage engine that scores severity and population impact, while a Command Center shows live incidents on a zone map and recommends the next response actions.",
+            stats: [
+                { label: "Build Time", value: "3 hrs" },
+                { label: "Result", value: "1st" },
+                { label: "Interfaces", value: "2" }
+            ],
+            stack: ["AI Triage Engine", "Citizen Portal", "Command Center", "Geospatial Map", "Scenario Simulation"],
+            gallery: [
+                { url: "/gallery/techathon/resqer-command-center.jpg", label: "Command Center" },
+                { url: "/gallery/techathon/resqer-citizen-app.jpg", label: "Citizen Portal" },
+                { url: "/gallery/techathon/pitch-architecture.jpg", label: "Dual-Interface Architecture" },
+                { url: "/gallery/techathon/award-ceremony.jpg", label: "1st Place - TECHATHON '26" }
+            ]
+        },
+        "ResQer InfraSight": {
+            description: "Intelligent infrastructure inspection system that goes beyond detecting defects: it understands their severity and risk and predicts what needs attention first. Won 2nd Prize at CresIgnite (Project Expo 2K26).",
+            challenge: "Road inspection is slow and manual, and simply spotting a pothole or crack doesn't tell a municipality how dangerous it is, how fast it will get worse, or what to fix first.",
+            solution: "A camera rover runs YOLO defect detection with OpenCV, fused with GPS, MPU6050 and ultrasonic readings. Each defect gets an Infrastructure DNA profile, AI-driven risk prioritisation and a predictive-maintenance forecast in a live municipal dashboard: Detect → Understand → Predict → Act.",
+            stats: [
+                { label: "Result", value: "2nd" },
+                { label: "Sensors", value: "3 + Cam" },
+                { label: "Pipeline", value: "4 Stage" }
+            ],
+            stack: ["YOLO", "OpenCV", "Sensor Fusion", "GPS", "MPU6050", "Ultrasonic", "Predictive Maintenance"],
+            gallery: [
+                { url: "/gallery/cresignite/infrasight-rover.jpg", label: "Inspection Rover" },
+                { url: "/gallery/cresignite/infrasight-vision-pipeline.jpg", label: "Live Vision Pipeline" },
+                { url: "/gallery/cresignite/infrasight-gis-radar.jpg", label: "GIS Radar & Infrastructure DNA" },
+                { url: "/gallery/cresignite/infrasight-predictive-decay.jpg", label: "Predictive Deterioration" },
+                { url: "/gallery/cresignite/award-ceremony.jpg", label: "2nd Prize - CresIgnite" }
+            ]
+        },
         "AR Associate": {
             description: "A specialized SaaS platform for AR (Accounts Receivable) automation, designed to streamline corporate debt recovery and field agent tracking.",
             challenge: "Synchronizing high-frequency field agent data with a centralized ERP while maintaining data integrity across spotty network connections.",

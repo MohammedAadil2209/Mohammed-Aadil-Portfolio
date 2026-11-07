@@ -136,6 +136,14 @@ const PROJECTS = [
         isStared: true
     },
     {
+        title: "RESQER",
+        category: "AI Emergency Response · Techathon Winner",
+        type: "web",
+        link: "#",
+        image: "/gallery/techathon/resqer-command-center.jpg",
+        isStared: true
+    },
+    {
         title: "The Long Story",
         category: "Client Project · Web",
         type: "web",
@@ -162,6 +170,14 @@ const PROJECTS = [
         type: "iot",
         link: "https://nexora-devstudio.vercel.app/",
         image: "/gallery/techfusion/prototype.jpg",
+        isStared: true
+    },
+    {
+        title: "ResQer InfraSight",
+        category: "AI Inspection Rover · CresIgnite 2nd Prize",
+        type: "iot",
+        link: "#",
+        image: "/gallery/cresignite/infrasight-rover.jpg",
         isStared: true
     },
     {

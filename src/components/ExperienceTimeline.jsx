@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import ScrollFloat from './ScrollFloat';
 import useScrollLock from '../lib/useScrollLock';
-import { X, ArrowRight, Award, Trophy, Briefcase, Calendar, Building2 } from 'lucide-react';
+import { X, ArrowRight, Award, Trophy, Briefcase, Calendar, Building2, Linkedin } from 'lucide-react';
 import devArenaCert from '../../certificates/dev-arena-hackathon.jpeg';
 import iitMadrasCert from '../../certificates/iit-madras-workshop.png';
 import nationalsummitcert from '../../certificates/national-summit-ai.png';
@@ -14,10 +14,12 @@ import edutainalCert from '../../certificates/edutainal-internship-certificate.j
 const EVENTS = [
   {
     id: 1,
+    startDate: "2025-09-23",
+    endDate: "2025-09-24",
     title: "NATIONAL SUMMIT ON BENEFITS AND CHALLENGES OF AI IN HUMAN WELLBEING",
     organization: "B.S. Abdur Rahman Crescent Institute of Science and Technology",
     type: "National Summit",
-    tag: "AI & IoT Enabled Smart Waste Management System | 23rd - 24th September, 2025",
+    tag: "AI & IoT Enabled Smart Waste Management System | 23 – 24 Sep 2025",
     overview: "Participated in the National Summit on Benefits and Challenges of AI in Human Wellbeing at B.S. Abdur Rahman Crescent Institute of Science and Technology, where the focus was on exploring how artificial intelligence can be leveraged to improve human life while addressing its ethical and societal challenges. As part of the summit, I was involved in presenting and understanding an AI & IoT Enabled Smart Waste Management System, which emphasized the integration of intelligent technologies to optimize waste collection, monitoring, and sustainability practices in urban environments.",
     role: "Engineered the communication logic linking physical hardware sensors (embedded systems) to a centralized architecture, and developed a real-time responsive web dashboard for safety managers to track live diagnostics and AI-triggered alerts.",
     learnings: [
@@ -38,10 +40,12 @@ const EVENTS = [
   },
   {
     id: 2,
+    startDate: "2025-10-04",
+    endDate: "2025-10-05",
     title: "IoT & Robotics Workshop",
     organization: "IIT Madras",
     type: "Workshop",
-    tag: "Hands-on Learning | 4th - 5th October, 2025",
+    tag: "Hands-on Learning | 4 – 5 Oct 2025",
     overview: "An intensive, hands-on workshop hosted at IIT Madras focusing on the critical intersection of applied robotics and Internet of Things (IoT) systems. The program bridged the gap between theoretical electronics and practical hardware engineering.",
     role: "Actively programmed microcontrollers, engineered sensor data pipelines, and collaborated within a technical team to assemble, wire, and deploy a fully functional robotic prototype.",
     learnings: [
@@ -61,10 +65,12 @@ const EVENTS = [
   },
   {
     id: 3,
+    startDate: "2025-10-16",
+    endDate: "2025-10-17",
     title: "DEV Arena Hackathon",
     organization: "SRM Easwari Engineering College",
     type: "24 - Hour Hackathon",
-    tag: "AI & Embedded Systems | 16th - 17th October, 2025",
+    tag: "AI & Embedded Systems | 16 – 17 Oct 2025",
     overview: "Formulated and deployed an 'AI-Powered Worker Safety Management System' designed for high-risk industrial environments. The solution actively monitored workplace hazards using hardware integration to prevent on-site accidents.",
     role: "Engineered the communication logic linking physical hardware sensors (embedded systems) to a centralized architecture, and developed a real-time responsive web dashboard for safety managers to track live diagnostics and AI-triggered alerts.",
     learnings: [
@@ -84,10 +90,13 @@ const EVENTS = [
   },
   {
     id: 4,
+    startDate: "2026-04-09",
+    endDate: "2026-04-09",
     title: "TECHFUSION '26 - PROJECT EXPO",
     organization: "B. S. Abdur Rahman Crescent Institute of Science and Technology",
     type: "Project Expo",
-    tag: "3rd Place Winner | 9th April, 2026",
+    tag: "Nexora GS-1 | 9 Apr 2026",
+    status: "3rd Place",
     overview: "Awarded 3rd Place for Nexora Gesture Control Rover, a cutting-edge human-robot interaction system. Designed to provide touchless, zero-latency control for robotic hardware in hazardous or sterile environments, Nexora bridges the gap between human kinetic movement and physical actuation using advanced Computer Vision AI.",
     role: "Lead Architect of the three-phase system: Perception (MediaPipe AI), Logic Distribution (Flask-SocketIO Server), and Visualization (React HUD). Engineered the Hysteresis Consecutive Frame Validation (HCFV) filter to eliminate 'ghost movements' and developed the real-time telemetry dashboard for propulsion and vector monitoring.",
     learnings: [
@@ -105,19 +114,94 @@ const EVENTS = [
       { url: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=70&w=1400&auto=format&fit=crop", caption: "Nexora GS-1 Tactical Gesture Interface" },
       { url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=70&w=1400&auto=format&fit=crop", caption: "Robotic Prototype Architecture" }
     ]
+  },
+  {
+    id: 5,
+    startDate: "2026-09-18",
+    endDate: "2026-09-18",
+    title: "TECHATHON '26 - 1st Place Winner",
+    organization: "B.S. Abdur Rahman Crescent Institute of Science and Technology",
+    association: "School of Computer Information and Mathematical Sciences (SCIMS) · Dept. of CSE",
+    type: "3-Hour Techathon",
+    tag: "Team Nexora | 18 Sep 2026",
+    status: "1st Place",
+    overview: "Three hours to take a problem statement, shape an idea, build a working solution and present it. As Team Nexora, we built RESQER, an AI-powered emergency response and disaster coordination platform that turns scattered emergency reports into actionable intelligence. Everything was developed on the spot within the three hours, from understanding the problem to building, debugging and presenting, and the project won 1st Place.",
+    role: "Co-built RESQER with my Team Nexora teammate and presented it to the judges. RESQER uses a dual-interface architecture: a panic-proof Citizen Portal (report an emergency, describe it by voice, or send a silent one-tap alert when you can't talk) and a Command Center for responders with a live incident map, community signal feed, AI-recommended actions and scenario simulation.",
+    learnings: [
+      "Turning a raw problem statement into a working product in 3 hours",
+      "AI triage: prioritising distress signals by severity, classification and population density",
+      "Designing panic-proof, low-bandwidth interfaces for high-stress situations",
+      "Command-center UX: live incident mapping, resource routing and response recommendations",
+      "Pitching a technical solution clearly to a judging panel under time pressure"
+    ],
+    skills: ["Rapid Prototyping", "AI Triage", "Emergency Response Systems", "Geospatial Visualization", "Digital Twins", "UI/UX", "Pitching", "Teamwork"],
+    impact: "Won 1st Place at TECHATHON '26 and was recognised for exceptional innovation, creativity and technical excellence. RESQER: from scattered signals to coordinated action.",
+    heroImage: "/gallery/techathon/award-ceremony.jpg",
+    certificate: "/gallery/techathon/certificate.jpg",
+    linkedinPosts: [
+      { label: "View LinkedIn Post", url: "https://www.linkedin.com/feed/update/urn:li:activity:7507092193195655168/" }
+    ],
+    gallery: [
+      { url: "/gallery/techathon/certificate.jpg", caption: "Certificate of Achievement - 1st Place, TECHATHON '26" },
+      { url: "/gallery/techathon/award-ceremony.jpg", caption: "Receiving the 1st Place award" },
+      { url: "/gallery/techathon/pitch-architecture.jpg", caption: "Presenting RESQER's dual-interface architecture" },
+      { url: "/gallery/techathon/resqer-command-center.jpg", caption: "RESQER Command Center: live incidents and AI-recommended response" },
+      { url: "/gallery/techathon/resqer-citizen-app.jpg", caption: "RESQER Citizen Portal: report, speak or silently signal an emergency" },
+      { url: "/gallery/techathon/pitch-demo.jpg", caption: "Live demo for the judging panel" },
+      { url: "/gallery/techathon/certificates-medals.jpg", caption: "Team Nexora: winner certificates and medals" }
+    ]
+  },
+  {
+    id: 6,
+    startDate: "2026-10-05",
+    endDate: "2026-10-05",
+    title: "CresIgnite - Project Expo 2K26",
+    organization: "B.S. Abdur Rahman Crescent Institute of Science and Technology",
+    association: "Department of Computer Science and Engineering · SCIMS",
+    type: "Project Expo",
+    tag: "Team Nexora | 5 Oct 2026",
+    status: "2nd Place",
+    overview: "Team Nexora secured 2nd Prize at CresIgnite (Project Expo 2K26) with ResQer InfraSight, an intelligent infrastructure inspection system built to go beyond simply detecting defects. A camera-equipped rover patrols roads and streams what it sees to a municipal dashboard that understands not just where a defect is, but how severe it is, how risky it is, and what needs attention first.",
+    role: "Built ResQer InfraSight with my teammate Rahil Syed. We used YOLO for real-time defect detection and OpenCV for computer vision, fused with GPS, MPU6050 and ultrasonic sensor data. On top of that we designed Infrastructure DNA, AI-driven risk prioritisation and predictive maintenance, surfaced in a dashboard with a live GIS radar, the rover's vision pipeline and a road-deterioration forecast.",
+    learnings: [
+      "Real-time object detection with YOLO and computer vision with OpenCV",
+      "Sensor fusion: combining GPS, MPU6050 (IMU) and ultrasonic data with vision",
+      "Infrastructure DNA: giving every detected defect a traceable profile",
+      "AI-driven risk prioritisation and predictive maintenance forecasting",
+      "Designing a pipeline end to end: Detect → Understand → Predict → Act"
+    ],
+    skills: ["YOLO", "OpenCV", "Computer Vision", "Sensor Fusion", "GPS", "MPU6050", "Ultrasonic Sensors", "Predictive Maintenance", "Robotics"],
+    impact: "Won 2nd Prize at CresIgnite (Project Expo 2K26). Thanks to Karthiga Kathiravan Ma'am for her guidance and support throughout the journey, and to the CresIgnite team, mentors and judges.",
+    heroImage: "/gallery/cresignite/award-ceremony.jpg",
+    certificate: "/gallery/cresignite/certificate.jpg",
+    linkedinPosts: [
+      { label: "View My LinkedIn Post", url: "https://www.linkedin.com/posts/mohammed-aadil-049b29322_cresignite-nexora-resqerinfrasight-ugcPost-7514027793756778497-ttqm/" },
+      { label: "View Team Post", url: "https://www.linkedin.com/feed/update/urn:li:activity:7514663214995968000/" }
+    ],
+    gallery: [
+      { url: "/gallery/cresignite/certificate.jpg", caption: "Certificate of Appreciation - 2nd Place, Project Expo 2K26" },
+      { url: "/gallery/cresignite/award-ceremony.jpg", caption: "Team Nexora receiving the 2nd Prize" },
+      { url: "/gallery/cresignite/infrasight-rover.jpg", caption: "The ResQer InfraSight inspection rover" },
+      { url: "/gallery/cresignite/infrasight-gis-radar.jpg", caption: "Municipal GIS infrastructure radar & Infrastructure DNA feed" },
+      { url: "/gallery/cresignite/infrasight-vision-pipeline.jpg", caption: "Live rover AI ingestion & YOLO vision pipeline" },
+      { url: "/gallery/cresignite/infrasight-predictive-decay.jpg", caption: "Predictive road deterioration & municipal ROI forecast" },
+      { url: "/gallery/cresignite/certificate-medal.jpg", caption: "Certificate and medal" }
+    ]
   }
 ];
 
 const WORK_EXPERIENCE_EVENTS = [
   {
     id: 'work-1',
+    startDate: "2026-04-01",
+    endDate: "2026-08-31",
     title: "Robotics & Innovation Intern",
     organization: "Edutainal Ventures",
     organizationLink: "https://edutainal.com/",
     association: "Associated with Edutainal Maverick World",
     associationLink: "https://edutainalmaverick.world/",
     type: "Internship",
-    tag: "Edutainal Maverick World | April 2026 - August 2026",
+    tag: "Edutainal Maverick World | Apr – Aug 2026",
     status: "Completed",
     overview: "Completed a Robotics & Innovation internship at Edutainal Ventures (April 2026 - August 2026), associated with Edutainal Maverick World, within the CS & Robotics domain. The role combined R&D, student mentoring, learning activities, resource support and program operations with hands-on robotics, IoT, sensors and automation projects.",
     role: "Contributed to R&D and technical prototyping for robotics and IoT projects, mentored students through hands-on builds, and supported learning activities and program operations across the CS & Robotics domain.",
@@ -141,13 +225,15 @@ const WORK_EXPERIENCE_EVENTS = [
   },
   {
     id: 'work-2',
+    startDate: "2026-06-29",
+    endDate: "2026-07-10",
     title: "Industrial Automation Intern (Siemens S7-1200 PLC)",
     organization: "Siemens Centre of Excellence (SCoE-MIT)",
     organizationLink: "https://www.scoe.mitindia.edu/research",
     association: "Anna University, MIT Campus - Dept. of Instrumentation Engineering",
     associationLink: "https://www.scoe.mitindia.edu/",
     type: "Internship",
-    tag: "Siemens CoE, MIT Anna University | 29th June 2026 - 10th July 2026",
+    tag: "Siemens CoE, MIT Anna University | 29 Jun – 10 Jul 2026",
     status: "Completed",
     overview: "Completed an intensive 100% physical offline summer internship at the Siemens Centre of Excellence (SCoE-MIT), Madras Institute of Technology, Anna University in collaboration with the Department of Instrumentation Engineering. The program focused on Industrial Automation using Siemens S7-1200 PLC systems, incorporating course materials, hands-on programming tasks, theory & lab practicals, hardware assessments, and industrial project execution.",
     role: "Programmed Siemens S7-1200 PLCs using TIA Portal (Totally Integrated Automation). Configured digital and analog I/O modules, wired physical sensors, relays, and actuators, engineered Ladder Logic (LAD) control sequences, and conducted diagnostic hardware troubleshooting and system validation.",
@@ -169,6 +255,19 @@ const WORK_EXPERIENCE_EVENTS = [
     ]
   }
 ];
+
+
+// Award badge colours: 1st gold, 2nd silver, 3rd bronze
+const PLACE_STYLES = {
+  1: "bg-amber-400/10 border-amber-300/35 text-amber-300",
+  2: "bg-slate-200/10 border-slate-200/35 text-slate-200",
+  3: "bg-orange-700/15 border-orange-400/35 text-orange-300",
+};
+
+// Most recent first: sort by end date, then start date (ISO strings compare correctly).
+const byMostRecent = (a, b) => b.endDate.localeCompare(a.endDate) || b.startDate.localeCompare(a.startDate);
+const SORTED_WORK = [...WORK_EXPERIENCE_EVENTS].sort(byMostRecent);
+const SORTED_EVENTS = [...EVENTS].sort(byMostRecent);
 
 const TimelineCard = ({ event, index, setSelectedEvent }) => {
   const cardRef = useRef(null);
@@ -226,12 +325,17 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
         >
           <div style={{ transform: "translateZ(40px)" }}>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
-              {event.status && (
+              {event.status && (/place/i.test(event.status) ? (
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em] ${PLACE_STYLES[event.status[0]] || PLACE_STYLES[1]}`}>
+                  <Trophy className="w-3 h-3" strokeWidth={2.5} aria-hidden="true" />
+                  {event.status}
+                </span>
+              ) : (
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 text-emerald-300 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em]">
                   <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                   {event.status}
                 </span>
-              )}
+              ))}
               <p className="text-rose-400/90 text-[10px] md:text-xs font-semibold tracking-widest uppercase leading-relaxed">
                 {event.tag}
               </p>
@@ -376,7 +480,7 @@ const ExperienceTimeline = () => {
               style={{ scaleY }}
             />
             <div className="flex flex-col relative z-10 w-full pl-0">
-              {WORK_EXPERIENCE_EVENTS.map((event, i) => (
+              {SORTED_WORK.map((event, i) => (
                 <TimelineCard
                   key={event.id}
                   event={event}
@@ -410,7 +514,7 @@ const ExperienceTimeline = () => {
           />
 
           <div className="flex flex-col relative z-10 w-full pl-0">
-            {EVENTS.map((event, i) => (
+            {SORTED_EVENTS.map((event, i) => (
               <TimelineCard
                 key={event.id}
                 event={event}
@@ -641,10 +745,8 @@ const ExperienceTimeline = () => {
                           <img
                             src={selectedEvent.certificate}
                             alt={`Certificate - ${selectedEvent.title}`}
-                            width="1628"
-                            height="2384"
                             decoding="async"
-                            className="w-full h-auto max-h-[420px] aspect-[1628/2384] object-contain object-top bg-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/cert:scale-[1.02]"
+                            className="w-full h-auto min-h-[180px] max-h-[420px] object-contain object-top bg-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/cert:scale-[1.02]"
                           />
                           <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 text-white text-[10px] font-bold uppercase tracking-[0.15em]">
                             Full size ↗
@@ -683,6 +785,19 @@ const ExperienceTimeline = () => {
                             <span>Download Official PDF Certificate ↗</span>
                           </a>
                         )}
+
+                        {(selectedEvent.linkedinPosts || []).map((post) => (
+                          <a
+                            key={post.url}
+                            href={post.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center justify-center gap-2.5 p-3.5 rounded-2xl bg-[#0A66C2]/10 hover:bg-[#0A66C2]/20 border border-[#0A66C2]/30 hover:border-[#0A66C2]/60 text-[#4f9de8] hover:text-white text-xs font-semibold uppercase tracking-widest transition-colors"
+                          >
+                            <Linkedin className="w-4 h-4 shrink-0" strokeWidth={1.8} aria-hidden="true" />
+                            <span>{post.label} ↗</span>
+                          </a>
+                        ))}
                       </div>
                     ) : (
                       <div className="flex items-center gap-6 bg-white/[0.02] border border-white/5 rounded-3xl p-6 opacity-60">
