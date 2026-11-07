@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowRight, ArrowLeft, Star } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, Star, Users } from 'lucide-react';
 import useScrollLock from '../lib/useScrollLock';
 
 const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
@@ -89,6 +89,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             stack: ["PWM Engine", "Vector Logic", "H-Bridge Control", "ESP32"]
         },
         "Nexora GS-1": {
+            team: "Team Nexora · with Rahil Syed",
             description: "An advanced human-robot interaction system using 21-point hand landmarker tracking for zero-latency gesture control in sterile or hazardous environments.",
             challenge: "Stabilizing robotic motion from jittery hand data while maintaining high inference speed and industrial-grade accuracy.",
             solution: "Engineered a three-phase architecture: Perception (MediaPipe), Logic (Flask-SocketIO), and Actuation (Arduino), stabilized by a custom HCFV filter.",
@@ -116,6 +117,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             stack: ["Framer Motion", "Vite", "Image Proxying", "React"]
         },
         "RESQER": {
+            team: "Team Nexora · with Rahil Syed",
             description: "AI-powered emergency response and disaster coordination platform that turns scattered emergency reports into actionable intelligence. Built from scratch in 3 hours and awarded 1st Place at TECHATHON '26.",
             challenge: "During floods, fires and urban crises, distress reports arrive scattered and unstructured, and responders can't tell what is most urgent or where to send help first.",
             solution: "A dual-interface system: a panic-proof Citizen Portal (report, speak, or send a silent one-tap alert) feeds an AI triage engine that scores severity and population impact, while a Command Center shows live incidents on a zone map and recommends the next response actions.",
@@ -133,6 +135,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             ]
         },
         "ResQer InfraSight": {
+            team: "Team Nexora · with Rahil Syed",
             description: "Intelligent infrastructure inspection system that goes beyond detecting defects: it understands their severity and risk and predicts what needs attention first. Won 2nd Prize at CresIgnite (Project Expo 2K26).",
             challenge: "Road inspection is slow and manual, and simply spotting a pothole or crack doesn't tell a municipality how dangerous it is, how fast it will get worse, or what to fix first.",
             solution: "A camera rover runs YOLO defect detection with OpenCV, fused with GPS, MPU6050 and ultrasonic readings. Each defect gets an Infrastructure DNA profile, AI-driven risk prioritisation and a predictive-maintenance forecast in a live municipal dashboard: Detect → Understand → Predict → Act.",
@@ -247,6 +250,13 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                     {project.title}
                                 </h2>
                                 
+                                {projectData.team && (
+                                    <p className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-white/80 text-xs font-medium">
+                                        <Users size={14} className="text-rose-400" aria-hidden="true" />
+                                        {projectData.team}
+                                    </p>
+                                )}
+
                                 <p className="text-white/50 text-sm md:text-base leading-relaxed mb-8 max-w-md font-light italic">
                                     "{projectData.description}"
                                 </p>

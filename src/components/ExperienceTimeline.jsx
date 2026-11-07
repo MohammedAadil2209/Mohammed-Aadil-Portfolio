@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import ScrollFloat from './ScrollFloat';
 import useScrollLock from '../lib/useScrollLock';
-import { X, ArrowRight, Award, Trophy, Briefcase, Calendar, Building2, Linkedin } from 'lucide-react';
+import { X, ArrowRight, Award, Trophy, Briefcase, Calendar, Building2, Linkedin, Users } from 'lucide-react';
 import devArenaCert from '../../certificates/dev-arena-hackathon.jpeg';
 import iitMadrasCert from '../../certificates/iit-madras-workshop.png';
 import nationalsummitcert from '../../certificates/national-summit-ai.png';
@@ -93,12 +93,14 @@ const EVENTS = [
     startDate: "2026-04-09",
     endDate: "2026-04-09",
     title: "TECHFUSION '26 - PROJECT EXPO",
+    team: "Team Nexora · with Rahil Syed",
+    gratitude: "Especially grateful to my teammate Rahil Syed. Building Nexora GS-1 together, from the first prototype to the podium, is what made this achievement truly special. 🤝",
     organization: "B. S. Abdur Rahman Crescent Institute of Science and Technology",
     type: "Project Expo",
     tag: "Nexora GS-1 | 9 Apr 2026",
     status: "3rd Place",
     overview: "Awarded 3rd Place for Nexora Gesture Control Rover, a cutting-edge human-robot interaction system. Designed to provide touchless, zero-latency control for robotic hardware in hazardous or sterile environments, Nexora bridges the gap between human kinetic movement and physical actuation using advanced Computer Vision AI.",
-    role: "Lead Architect of the three-phase system: Perception (MediaPipe AI), Logic Distribution (Flask-SocketIO Server), and Visualization (React HUD). Engineered the Hysteresis Consecutive Frame Validation (HCFV) filter to eliminate 'ghost movements' and developed the real-time telemetry dashboard for propulsion and vector monitoring.",
+    role: "Built Nexora GS-1 with my teammate Rahil Syed. I was Lead Architect of the three-phase system: Perception (MediaPipe AI), Logic Distribution (Flask-SocketIO Server), and Visualization (React HUD). Engineered the Hysteresis Consecutive Frame Validation (HCFV) filter to eliminate 'ghost movements' and developed the real-time telemetry dashboard for propulsion and vector monitoring.",
     learnings: [
       "High-fidelity motion capture using 21-point 3D Hand Landmarker coordination",
       "Asynchronous multi-threaded command distribution via Flask-SocketIO",
@@ -120,13 +122,15 @@ const EVENTS = [
     startDate: "2026-09-18",
     endDate: "2026-09-18",
     title: "TECHATHON '26 - 1st Place Winner",
+    team: "Team Nexora · with Rahil Syed",
+    gratitude: "Grateful to have had Rahil Syed by my side. Three hours of pressure, ideas and debugging turned into a 1st Place win because we built RESQER together. 🤝",
     organization: "B.S. Abdur Rahman Crescent Institute of Science and Technology",
     association: "School of Computer Information and Mathematical Sciences (SCIMS) · Dept. of CSE",
     type: "3-Hour Techathon",
     tag: "Team Nexora | 18 Sep 2026",
     status: "1st Place",
     overview: "Three hours to take a problem statement, shape an idea, build a working solution and present it. As Team Nexora, we built RESQER, an AI-powered emergency response and disaster coordination platform that turns scattered emergency reports into actionable intelligence. Everything was developed on the spot within the three hours, from understanding the problem to building, debugging and presenting, and the project won 1st Place.",
-    role: "Co-built RESQER with my Team Nexora teammate and presented it to the judges. RESQER uses a dual-interface architecture: a panic-proof Citizen Portal (report an emergency, describe it by voice, or send a silent one-tap alert when you can't talk) and a Command Center for responders with a live incident map, community signal feed, AI-recommended actions and scenario simulation.",
+    role: "Co-built RESQER with my Team Nexora teammate Rahil Syed and presented it to the judges. RESQER uses a dual-interface architecture: a panic-proof Citizen Portal (report an emergency, describe it by voice, or send a silent one-tap alert when you can't talk) and a Command Center for responders with a live incident map, community signal feed, AI-recommended actions and scenario simulation.",
     learnings: [
       "Turning a raw problem statement into a working product in 3 hours",
       "AI triage: prioritising distress signals by severity, classification and population density",
@@ -156,6 +160,8 @@ const EVENTS = [
     startDate: "2026-10-05",
     endDate: "2026-10-05",
     title: "CresIgnite - Project Expo 2K26",
+    team: "Team Nexora · with Rahil Syed",
+    gratitude: "I'm especially happy to have built this alongside my teammate Rahil Syed. Turning ResQer InfraSight from an idea into a working rover together is a moment Team Nexora will always remember. 🤝",
     organization: "B.S. Abdur Rahman Crescent Institute of Science and Technology",
     association: "Department of Computer Science and Engineering · SCIMS",
     type: "Project Expo",
@@ -186,6 +192,40 @@ const EVENTS = [
       { url: "/gallery/cresignite/infrasight-vision-pipeline.jpg", caption: "Live rover AI ingestion & YOLO vision pipeline" },
       { url: "/gallery/cresignite/infrasight-predictive-decay.jpg", caption: "Predictive road deterioration & municipal ROI forecast" },
       { url: "/gallery/cresignite/certificate-medal.jpg", caption: "Certificate and medal" }
+    ]
+  },
+  {
+    id: 7,
+    startDate: "2026-10-26",
+    endDate: "2026-10-26",
+    title: "CODE CANVAS - TALENT HUNT 2K26",
+    team: "Main Coordinators: Mohammed Aadil & Rahil Syed",
+    gratitude: "Heartfelt thanks to Rahil Syed, my fellow main coordinator. Planning and running CODE CANVAS together, sharing every responsibility from day one, is what made this event a success. 🤝",
+    organization: "B.S. Abdur Rahman Crescent Institute of Science and Technology",
+    association: "Department of Computer Science and Engineering · SCIMS",
+    type: "Event Organiser",
+    tag: "Event Organisation | 26 Oct 2026",
+    status: "Main Coordinator",
+    overview: "CODE CANVAS was an event at TALENT HUNT 2K26, conducted by the Department of Computer Science and Engineering at B.S. Abdur Rahman Crescent Institute of Science and Technology. Rahil Syed and I were the main coordinators, responsible for bringing the event to life from the first plan to the final session.",
+    role: "As main coordinator alongside Rahil Syed, I took ownership of planning, coordination and on-the-day execution: shaping the event format, working with faculty coordinators and the organising team, managing participants in the lab, and making sure the event ran smoothly from start to finish.",
+    learnings: [
+      "End-to-end event planning, from idea to successful execution",
+      "Coordinating with faculty, volunteers and participants",
+      "Taking responsibility and making decisions under time pressure",
+      "Leading and working within an organising team",
+      "Running a hands-on technical event in a live lab environment"
+    ],
+    skills: ["Event Management", "Leadership", "Coordination", "Teamwork", "Planning", "Communication"],
+    impact: "Received a Certificate of Appreciation for dedication and commitment in organising and managing the CODE CANVAS event. Thanks to the faculty coordinators and the entire organising team for making it a success.",
+    heroImage: "/gallery/talenthunt/organising-team.jpg",
+    certificate: "/gallery/talenthunt/certificate.jpg",
+    linkedinPosts: [
+      { label: "View LinkedIn Post", url: "https://www.linkedin.com/feed/update/urn:li:activity:7522592139252355072/" }
+    ],
+    gallery: [
+      { url: "/gallery/talenthunt/certificate.jpg", caption: "Certificate of Appreciation - CODE CANVAS, TALENT HUNT 2K26" },
+      { url: "/gallery/talenthunt/organising-team.jpg", caption: "The CODE CANVAS organising team with faculty coordinators" },
+      { url: "/gallery/talenthunt/code-canvas-live.jpg", caption: "CODE CANVAS in progress in the lab" }
     ]
   }
 ];
@@ -325,7 +365,12 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
         >
           <div style={{ transform: "translateZ(40px)" }}>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
-              {event.status && (/place/i.test(event.status) ? (
+              {event.status && (/coordinator|organi[sz]er/i.test(event.status) ? (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-500/10 border border-violet-400/30 text-violet-300 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em]">
+                  <Users className="w-3 h-3" strokeWidth={2.5} aria-hidden="true" />
+                  {event.status}
+                </span>
+              ) : /place/i.test(event.status) ? (
                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em] ${PLACE_STYLES[event.status[0]] || PLACE_STYLES[1]}`}>
                   <Trophy className="w-3 h-3" strokeWidth={2.5} aria-hidden="true" />
                   {event.status}
@@ -343,6 +388,12 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
             <h3 className="text-xl sm:text-2xl md:text-4xl font-bold text-white mb-3 leading-tight">
               {event.title}
             </h3>
+            {event.team && (
+              <p className="flex items-center gap-2 text-white/55 text-[11px] md:text-xs font-medium mb-3">
+                <Users className="w-3.5 h-3.5 text-rose-400/80 shrink-0" strokeWidth={2} aria-hidden="true" />
+                {event.team}
+              </p>
+            )}
             
             <div className="flex flex-col gap-1 mb-6 border-l border-white/20 pl-4">
                 {event.organizationLink ? (
@@ -591,6 +642,12 @@ const ExperienceTimeline = () => {
                       <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-white mb-4 leading-tight">
                         {selectedEvent.title}
                       </h2>
+                      {selectedEvent.team && (
+                        <p className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-white/85 text-xs md:text-sm font-medium">
+                          <Users className="w-4 h-4 text-rose-400" strokeWidth={2} aria-hidden="true" />
+                          {selectedEvent.team}
+                        </p>
+                      )}
                     </motion.div>
                   </div>
                 </div>
@@ -642,6 +699,24 @@ const ExperienceTimeline = () => {
                         {selectedEvent.impact}
                       </p>
                     </motion.div>
+
+                    {selectedEvent.gratitude && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.35 }}
+                        className="relative overflow-hidden rounded-3xl border border-rose-500/20 bg-gradient-to-br from-rose-900/20 via-white/[0.02] to-transparent p-6 md:p-8"
+                      >
+                        <span aria-hidden="true" className="absolute -top-4 right-4 font-serif text-[7rem] leading-none text-rose-500/10 select-none">&rdquo;</span>
+                        <h4 className="text-rose-400 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 flex items-center gap-2">
+                          <span className="w-2 h-[1px] bg-rose-500" /> A Note of Gratitude
+                        </h4>
+                        <p className="relative text-white/85 text-base md:text-lg leading-relaxed font-serif italic">
+                          {selectedEvent.gratitude}
+                        </p>
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Right Column Data (Metrics & Skills) */}
