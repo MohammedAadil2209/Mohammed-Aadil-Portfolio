@@ -89,7 +89,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             stack: ["PWM Engine", "Vector Logic", "H-Bridge Control", "ESP32"]
         },
         "Nexora GS-1": {
-            team: "Team Nexora · with Rahil Syed",
+            team: "Team Nexora · with Rahil Syed & Abdul Mateen Danish",
             description: "An advanced human-robot interaction system using 21-point hand landmarker tracking for zero-latency gesture control in sterile or hazardous environments.",
             challenge: "Stabilizing robotic motion from jittery hand data while maintaining high inference speed and industrial-grade accuracy.",
             solution: "Engineered a three-phase architecture: Perception (MediaPipe), Logic (Flask-SocketIO), and Actuation (Arduino), stabilized by a custom HCFV filter.",
