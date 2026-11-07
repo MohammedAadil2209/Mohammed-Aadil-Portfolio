@@ -2,187 +2,155 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════ */
+
 @layer base {
+  html {
+    background-color: #050505;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
   body {
     background-color: #050505;
     color: #ffffff;
     overflow-x: hidden;
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    overflow-x: clip;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  img,
+  canvas,
+  video {
+    max-width: 100%;
+  }
+
+  /* Visible, on-brand focus ring for keyboard users only */
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(244, 63, 94, 0.85);
+    outline-offset: 3px;
+    border-radius: 9999px;
   }
 }
 
-/* Hide scrollbar for smooth scroll feel */
+/* Hidden native scrollbar — the top progress bar shows position instead */
 ::-webkit-scrollbar {
   display: none;
 }
-html {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  cursor: none; /* Custom cursor handles this */
-}
 
-/* General Link hover behavior */
-a, button {
-  cursor: none;
+/* Only hide the system cursor when the custom cursor is actually active
+   (desktop with a fine pointer). Touch / tablet users keep native behaviour. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
 }
 
 /* ═══════════════════════════════════════════
-   GLASSMORPHISM & NEON UTILITY CLASSES
+   LENIS SMOOTH SCROLL (required styles)
+   ═══════════════════════════════════════════ */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Scroll lock used by modals / mobile menu */
+html.scroll-locked,
+html.scroll-locked body {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Scrollable regions inside overlays */
+[data-lenis-prevent] {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* ═══════════════════════════════════════════
+   GLASS / NEON UTILITIES
    ═══════════════════════════════════════════ */
 
 .glass-card {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 
-              inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-.neon-glow-rose {
-  box-shadow: 0 0 20px rgba(136, 19, 55, 0.3),
-              0 0 40px rgba(136, 19, 55, 0.15),
-              0 0 80px rgba(136, 19, 55, 0.05);
-}
-
-.neon-glow-cyan {
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3),
-              0 0 40px rgba(6, 182, 212, 0.15),
-              0 0 80px rgba(6, 182, 212, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .neon-text-rose {
-  text-shadow: 0 0 10px rgba(136, 19, 55, 0.5),
-               0 0 20px rgba(136, 19, 55, 0.3);
+  text-shadow: 0 0 10px rgba(225, 29, 72, 0.45), 0 0 20px rgba(225, 29, 72, 0.25);
 }
 
 .neon-text-cyan {
-  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5),
-               0 0 20px rgba(6, 182, 212, 0.3);
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
 }
 
 /* ═══════════════════════════════════════════
-   FLOATING BACKGROUND PARTICLES
+   KEYFRAMES
    ═══════════════════════════════════════════ */
-
-@keyframes float-particle {
-  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
-  25% { transform: translateY(-30px) translateX(15px) scale(1.1); opacity: 0.5; }
-  50% { transform: translateY(-60px) translateX(-10px) scale(0.9); opacity: 0.2; }
-  75% { transform: translateY(-30px) translateX(20px) scale(1.05); opacity: 0.4; }
-}
 
 @keyframes orbit {
-  0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.1; }
-  100% { transform: scale(0.8); opacity: 0.5; }
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  20%, 100% { transform: translateX(100%); }
 }
 
-@keyframes grid-scan {
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-33.3333%, 0, 0); }
+}
+
+@keyframes scroll-hint {
   0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  100% { transform: translateY(200%); }
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+.animate-scroll-hint {
+  animation: scroll-hint 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
-@keyframes counter-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* ═══════════════════════════════════════════
-   SCROLL REVEAL ANIMATIONS
-   ═══════════════════════════════════════════ */
-
-.reveal-up {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-up.revealed {
-  opacity: 1;
-  transform: translateY(0);
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+  will-change: transform;
 }
 
 /* ═══════════════════════════════════════════
-   PREMIUM SECTION TRANSITIONS
-   ═══════════════════════════════════════════ */
-
-.section-divider {
-  position: relative;
-  height: 200px;
-  background: linear-gradient(180deg, transparent 0%, #050505 100%);
-}
-
-.section-divider::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1px;
-  height: 80px;
-  background: linear-gradient(180deg, transparent, rgba(136, 19, 55, 0.5), transparent);
-}
-
-/* ═══════════════════════════════════════════
-   FUTURISTIC GRID BACKGROUND
-   ═══════════════════════════════════════════ */
-
-.futuristic-grid {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* ═══════════════════════════════════════════
-   TIMELINE STYLES
-   ═══════════════════════════════════════════ */
-
-.timeline-connector {
-  position: relative;
-}
-
-.timeline-connector::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, 
-    rgba(136, 19, 55, 0.6), 
-    rgba(136, 19, 55, 0.2), 
-    transparent
-  );
-}
-
-@media (min-width: 768px) {
-  .timeline-connector::before {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-/* ═══════════════════════════════════════════
-   STAT COUNTER STYLES
+   STAT CARD
    ═══════════════════════════════════════════ */
 
 .stat-card {
@@ -197,104 +165,100 @@ a, button {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    rgba(136, 19, 55, 0.1) 25%,
-    transparent 50%
-  );
-  animation: orbit 8s linear infinite;
+  background: conic-gradient(from 0deg, transparent 0%, rgba(225, 29, 72, 0.1) 25%, transparent 50%);
   opacity: 0;
   transition: opacity 0.5s;
+  pointer-events: none;
 }
 
+/* Only spin the conic gradient while hovered (it used to run forever, hidden) */
 .stat-card:hover::before {
   opacity: 1;
+  animation: orbit 8s linear infinite;
 }
 
 /* ═══════════════════════════════════════════
-   SKILL BADGE STYLES
+   PERFORMANCE: cheaper effects on small / touch screens
    ═══════════════════════════════════════════ */
 
-.skill-badge {
-  position: relative;
-  overflow: hidden;
-}
-
-.skill-badge::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transition: left 0.6s ease;
-}
-
-.skill-badge:hover::after {
-  left: 100%;
-}
-
-/* ═══════════════════════════════════════════
-   EXPERIENCE CARD STYLES
-   ═══════════════════════════════════════════ */
-
-.experience-card {
-  position: relative;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.experience-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(136, 19, 55, 0.3),
-    transparent 40%,
-    transparent 60%,
-    rgba(6, 182, 212, 0.2)
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.experience-card:hover::before {
-  opacity: 1;
-}
-
-/* ═══════════════════════════════════════════
-   SHINE ANIMATION FOR NAV
-   ═══════════════════════════════════════════ */
-@keyframes shine {
-  0% { transform: translateX(-100%); }
-  20%, 100% { transform: translateX(100%); }
-}
-
-/* ═══════════════════════════════════════════
-   MOBILE RESPONSIVENESS OVERRIDES
-   ═══════════════════════════════════════════ */
-
-@media (max-width: 768px) {
+@media (max-width: 768px), (hover: none) {
   .glass-card {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
-/* Selection styles */
+/* Off-screen sections skip layout & paint until they approach the viewport */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* ═══════════════════════════════════════════
+   ACCESSIBILITY: reduced motion
+   ═══════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 ::selection {
-  background-color: rgba(136, 19, 55, 0.4);
+  background-color: rgba(225, 29, 72, 0.4);
   color: #ffffff;
+}
+
+/* Floating action button steps aside while a modal / menu is open */
+.fab {
+  transition: opacity 0.3s ease;
+}
+html.scroll-locked .fab {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   HERO NAME — always fits its line.
+   "MOHAMMED" is 6.0em wide in Plus Jakarta Sans 800; dividing the available
+   width by 6.6 leaves ~10% headroom for fallback fonts. The vh term keeps it
+   in proportion on short / landscape screens.
+   ═══════════════════════════════════════════ */
+.hero-name {
+  --hero-pad: 1.5rem;
+  font-size: min(calc((100vw - 2 * var(--hero-pad)) / 6.6), 17vh, 11rem);
+}
+@media (min-width: 768px) {
+  .hero-name { --hero-pad: 3rem; }
+}
+@media (min-width: 1024px) {
+  .hero-name { --hero-pad: 4rem; }
+}
+/* From 1280px the name shares its row with the intro + buttons */
+@media (min-width: 1280px) {
+  .hero-name { font-size: min(8.5vw, 19vh, 11rem); }
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER SIGNATURE — full name always fits the content width.
+   "MOHAMMED AADIL." ≈ 9.4em wide; cqw = 1% of the container's width.
+   ═══════════════════════════════════════════ */
+.footer-signature {
+  container-type: inline-size;
+}
+.footer-signature__text {
+  font-size: 9vw; /* fallback for browsers without container units */
+  font-size: calc(100cqw / 10.2);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.35) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.footer-signature__text span {
+  -webkit-text-fill-color: #e11d48;
 }

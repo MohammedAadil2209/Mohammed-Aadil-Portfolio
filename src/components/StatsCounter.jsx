@@ -74,10 +74,10 @@ const StatsCounter = () => {
   return (
     <section
       ref={ref}
-      className="relative w-full bg-[#050505] py-24 md:py-32 px-4 md:px-12 lg:px-24 z-20 overflow-hidden"
+      className="relative w-full bg-[#050505] py-20 md:py-32 px-5 md:px-12 lg:px-24 z-20 overflow-hidden"
     >
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-800/[0.03] rounded-full blur-[150px] pointer-events-none" />
+      <div aria-hidden="true" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none" style={{ background: 'radial-gradient(closest-side, rgba(225,29,72,0.06), transparent)' }} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
@@ -88,7 +88,7 @@ const StatsCounter = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <p className="text-rose-700 font-mono text-[10px] md:text-xs tracking-[0.4em] uppercase mb-4">
+          <p className="text-rose-500/90 font-mono text-[10px] md:text-xs tracking-[0.4em] uppercase mb-4">
             Impact & Metrics
           </p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
@@ -109,7 +109,7 @@ const StatsCounter = () => {
                 delay: i * 0.1,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="stat-card glass-card rounded-3xl p-6 md:p-8 flex flex-col items-center text-center group"
+              className="stat-card glass-card rounded-3xl p-5 md:p-8 flex flex-col items-center text-center group"
             >
               {/* Icon */}
               <div
@@ -131,7 +131,7 @@ const StatsCounter = () => {
               </div>
 
               {/* Label */}
-              <p className="text-white/40 text-[10px] md:text-xs font-semibold tracking-[0.15em] uppercase">
+              <p className="text-white/55 text-[10px] md:text-xs font-semibold tracking-[0.15em] uppercase">
                 {stat.label}
               </p>
             </motion.div>

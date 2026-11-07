@@ -1,30 +1,31 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Preloader = ({ progress, isLoaded }) => {
+/**
+ * Minimal branded loader. Only the first hero frame gates it (the rest stream
+ * in the background), so an indeterminate bar is more honest than a % counter.
+ */
+const Preloader = ({ isLoaded }) => {
   return (
     <AnimatePresence>
       {!isLoaded && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            transition: { duration: 1, ease: [0.7, 0, 0.3, 1] },
-          }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background pointer-events-none"
+          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.7, 0, 0.3, 1] } }}
+          className="fixed inset-0 z-[500] flex items-center justify-center bg-[#050505] pointer-events-none"
+          role="status"
+          aria-label="Loading"
         >
-          <div className="flex flex-col items-center">
-            <motion.div className="text-white text-6xl md:text-8xl font-medium tracking-tighter">
-              {Math.round(progress)}%
-            </motion.div>
-            <div className="mt-8 w-48 h-[2px] bg-white/20 overflow-hidden relative">
-              <motion.div
-                className="absolute top-0 left-0 h-full bg-white transition-all duration-300 ease-out"
-                style={{ width: `${progress}%` }}
+          <div className="flex flex-col items-center gap-6">
+            <span className="text-white text-sm md:text-base font-bold tracking-[0.35em]">
+              MOHAMMED AADIL<span className="text-rose-600">.</span>
+            </span>
+            <div className="relative w-40 h-px bg-white/10 overflow-hidden">
+              <motion.span
+                className="absolute inset-y-0 left-0 w-1/3 bg-white"
+                animate={{ x: ["-100%", "300%"] }}
+                transition={{ duration: 1.1, repeat: Infinity, ease: [0.65, 0, 0.35, 1] }}
               />
-            </div>
-            <div className="mt-4 text-xs tracking-widest uppercase text-white/50">
-              Loading Sequence
             </div>
           </div>
         </motion.div>

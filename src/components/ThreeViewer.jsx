@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import '../lib/smoothScroll';
 import { motion } from 'framer-motion';
 
 const ThreeViewer = () => {
@@ -25,7 +25,7 @@ const ThreeViewer = () => {
         // Renderer with strict speed priority
         const renderer = new THREE.WebGLRenderer({ 
             antialias: !isMobile, 
-            powerPreference: "high-performance",
+            powerPreference: isMobile ? "default" : "high-performance",
             stencil: false,
             depth: true
         });
@@ -172,10 +172,19 @@ const ThreeViewer = () => {
             }
         });
 
+        let lastW = window.innerWidth;
+        let lastH = window.innerHeight;
         const handleResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            // Skip the mobile address-bar show/hide (height-only, small change):
+            // resizing the WebGL buffer there causes a visible hitch.
+            if (w === lastW && Math.abs(h - lastH) < 160) return;
+            lastW = w;
+            lastH = h;
+            camera.aspect = w / h;
             camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(w, h);
         };
         window.addEventListener('resize', handleResize);
 

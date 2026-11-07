@@ -1,20 +1,13 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useEffect, useState, Suspense, lazy, useCallback } from 'react';
+import { MotionConfig } from 'framer-motion';
+import { initSmoothScroll, destroySmoothScroll } from './lib/smoothScroll';
 import NavBar from './components/NavBar';
 import HeroSequence from './components/HeroSequence';
 import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
-import FloatingParticles from './components/FloatingParticles';
+import ScrollProgress from './components/ScrollProgress';
 
 const DeferredContent = lazy(() => import('./components/DeferredContent'));
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Prevent ScrollTrigger from refreshing (and causing a jump) when mobile
-// browser address bars show/hide during scroll.
-ScrollTrigger.config({ ignoreMobileResize: true });
 
 function App() {
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -22,49 +15,32 @@ function App() {
   const [isProjectOpen, setIsProjectOpen] = useState(false);
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothTouch: true,
-    });
-
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Sync Lenis with GSAP Ticker for maximum performance
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
-    };
+    initSmoothScroll();
+    return destroySmoothScroll;
   }, []);
 
+  const handleProgress = useCallback((p) => setLoadingProgress(p), []);
+  const handleLoaded = useCallback(() => setIsLoaded(true), []);
+  const handleProjectState = useCallback((isOpen) => setIsProjectOpen(isOpen), []);
+
   return (
-    <>
+    // reducedMotion="user" makes every framer-motion animation respect the
+    // OS-level "reduce motion" accessibility setting automatically.
+    <MotionConfig reducedMotion="user">
       <Preloader progress={loadingProgress} isLoaded={isLoaded} />
       <CustomCursor />
-      <FloatingParticles />
-      
-      <main className="relative w-full bg-[#050505]">
+      <ScrollProgress />
+
+      <main id="top" className="relative w-full bg-[#050505]">
         <NavBar isProjectOpen={isProjectOpen} />
 
-        {/* The Hero Scroll Sequence Container */}
-        <HeroSequence 
-          onProgress={(p) => setLoadingProgress(p)} 
-          onLoaded={() => setIsLoaded(true)} 
-        />
-        
-        {/* Lazy Loaded Below-the-fold content */}
+        <HeroSequence onProgress={handleProgress} onLoaded={handleLoaded} />
+
         <Suspense fallback={null}>
-          <DeferredContent onProjectStateChange={(isOpen) => setIsProjectOpen(isOpen)} />
+          <DeferredContent onProjectStateChange={handleProjectState} />
         </Suspense>
       </main>
-    </>
+    </MotionConfig>
   );
 }
 

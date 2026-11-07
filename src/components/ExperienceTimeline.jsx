@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import ScrollFloat from './ScrollFloat';
+import useScrollLock from '../lib/useScrollLock';
 import { X, ArrowRight, Award, Trophy, Briefcase, Calendar, Building2 } from 'lucide-react';
 import devArenaCert from '../../certificates/dev-arena-hackathon.jpeg';
 import iitMadrasCert from '../../certificates/iit-madras-workshop.png';
 import nationalsummitcert from '../../certificates/national-summit-ai.png';
 import techFusionCert from '../../certificates/techfusion-certificate.png';
 import siemensCert from '../../certificates/siemens-certificate.jpg';
+import edutainalCert from '../../certificates/edutainal-internship-certificate.jpg';
 
 
 const EVENTS = [
@@ -26,12 +28,12 @@ const EVENTS = [
     ],
     skills: ["Embedded Systems", "IoT", "React.js", "Data visualization", "AI Integration", "Fast Prototyping"],
     impact: "Gained significant exposure to building end-to-end industrial tech where software directly impacts human safety, successfully bridging my deep hardware knowledge with accessible frontend dashboards.",
-    heroImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=70&w=1400&auto=format&fit=crop",
     certificate: nationalsummitcert,
     gallery: [
-      { url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2000&auto=format&fit=crop", caption: "Data Visualization Dashboard" },
-      { url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2000&auto=format&fit=crop", caption: "Smart City IoT Network" },
-      { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop", caption: "Technical Collaboration Session" }
+      { url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=70&w=1400&auto=format&fit=crop", caption: "Data Visualization Dashboard" },
+      { url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=70&w=1400&auto=format&fit=crop", caption: "Smart City IoT Network" },
+      { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=70&w=1400&auto=format&fit=crop", caption: "Technical Collaboration Session" }
     ]
   },
   {
@@ -50,11 +52,11 @@ const EVENTS = [
     ],
     skills: ["IoT", "Robotics", "Embedded C", "Hardware Integration", "Problem Solving"],
     impact: "Fundamentally altered my approach to software architecture by exposing me to the physical constraints of hardware, enabling me to design more robust, full-stack systems.",
-    heroImage: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=2000&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=70&w=1400&auto=format&fit=crop",
     certificate: iitMadrasCert,
     gallery: [
-      { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop", caption: "Hardware Prototyping" },
-      { url: "https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=2000&auto=format&fit=crop", caption: "Embedded Logic Testing" }
+      { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=70&w=1400&auto=format&fit=crop", caption: "Hardware Prototyping" },
+      { url: "https://images.unsplash.com/photo-1498049794561-7780e7231661?q=70&w=1400&auto=format&fit=crop", caption: "Embedded Logic Testing" }
     ]
   },
   {
@@ -73,11 +75,11 @@ const EVENTS = [
     ],
     skills: ["Embedded Systems", "IoT", "React.js", "Data Visualization", "AI Integration", "Fast Prototyping"],
     impact: "Gained significant exposure to building end-to-end industrial tech where software directly impacts human safety, successfully bridging my deep hardware knowledge with accessible frontend dashboards.",
-    heroImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2000&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=70&w=1400&auto=format&fit=crop",
     certificate: devArenaCert,
     gallery: [
-      { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop", caption: "24-Hour Sprints" },
-      { url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2000&auto=format&fit=crop", caption: "Code Optimization Phase" }
+      { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=70&w=1400&auto=format&fit=crop", caption: "24-Hour Sprints" },
+      { url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=70&w=1400&auto=format&fit=crop", caption: "Code Optimization Phase" }
     ]
   },
   {
@@ -100,8 +102,8 @@ const EVENTS = [
     heroImage: "/gallery/techfusion/prototype.jpg",
     certificate: techFusionCert,
     gallery: [
-      { url: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000&auto=format&fit=crop", caption: "Nexora GS-1 Tactical Gesture Interface" },
-      { url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=2000&auto=format&fit=crop", caption: "Robotic Prototype Architecture" }
+      { url: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=70&w=1400&auto=format&fit=crop", caption: "Nexora GS-1 Tactical Gesture Interface" },
+      { url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=70&w=1400&auto=format&fit=crop", caption: "Robotic Prototype Architecture" }
     ]
   }
 ];
@@ -115,23 +117,26 @@ const WORK_EXPERIENCE_EVENTS = [
     association: "Associated with Edutainal Maverick World",
     associationLink: "https://edutainalmaverick.world/",
     type: "Internship",
-    tag: "Edutainal Maverick World | May 2026 - Present",
-    overview: "Working as a Robotics & Innovation Intern at Edutainal Ventures, associated with Edutainal Maverick World. This role involves deep dives into robotics, innovation-based projects, and practical engineering solutions. My focus is on exploring AI-integrated robotics and building hardware-software systems that solve complex industrial challenges.",
-    role: "Leading technical prototyping, embedded system design, and AI integration for robotics projects. Collaborating with cross-functional teams to develop innovation-driven solutions.",
+    tag: "Edutainal Maverick World | April 2026 - August 2026",
+    status: "Completed",
+    overview: "Completed a Robotics & Innovation internship at Edutainal Ventures (April 2026 - August 2026), associated with Edutainal Maverick World, within the CS & Robotics domain. The role combined R&D, student mentoring, learning activities, resource support and program operations with hands-on robotics, IoT, sensors and automation projects.",
+    role: "Contributed to R&D and technical prototyping for robotics and IoT projects, mentored students through hands-on builds, and supported learning activities and program operations across the CS & Robotics domain.",
     learnings: [
+      "Robotics, IoT, sensors and automation through hands-on projects",
       "Advanced embedded systems and firmware development",
       "Industrial robotics and automation workflows",
       "AI/ML integration in physical hardware systems",
-      "Large-scale innovation project management",
-      "Technical problem solving in high-pressure environments"
+      "Student mentoring and technical communication",
+      "Program operations and innovation project support"
     ],
     skills: ["Arduino", "Raspberry Pi", "Python", "C++", "IoT", "Embedded Systems", "AI/ML", "Robotics", "Automation"],
-    impact: "Spearheading the transition from theoretical models to production-ready robotic prototypes, enhancing the innovation pipeline for Edutainal Maverick World.",
-    heroImage: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2000&auto=format&fit=crop",
-    certificate: null,
+    impact: "Successfully completed the internship, recognised by Edutainal Ventures for strong learning ability, responsibility, adaptability and commitment throughout the program.",
+    heroImage: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=70&w=1400&auto=format&fit=crop",
+    certificate: edutainalCert,
     gallery: [
-      { url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop", caption: "Robotics Development Phase" },
-      { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop", caption: "Embedded Logic Testing" }
+      { url: edutainalCert, caption: "Official Certificate of Internship - Edutainal Ventures (April - August 2026)" },
+      { url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=70&w=1400&auto=format&fit=crop", caption: "Robotics Development Phase" },
+      { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=70&w=1400&auto=format&fit=crop", caption: "Embedded Logic Testing" }
     ]
   },
   {
@@ -143,6 +148,7 @@ const WORK_EXPERIENCE_EVENTS = [
     associationLink: "https://www.scoe.mitindia.edu/",
     type: "Internship",
     tag: "Siemens CoE, MIT Anna University | 29th June 2026 - 10th July 2026",
+    status: "Completed",
     overview: "Completed an intensive 100% physical offline summer internship at the Siemens Centre of Excellence (SCoE-MIT), Madras Institute of Technology, Anna University in collaboration with the Department of Instrumentation Engineering. The program focused on Industrial Automation using Siemens S7-1200 PLC systems, incorporating course materials, hands-on programming tasks, theory & lab practicals, hardware assessments, and industrial project execution.",
     role: "Programmed Siemens S7-1200 PLCs using TIA Portal (Totally Integrated Automation). Configured digital and analog I/O modules, wired physical sensors, relays, and actuators, engineered Ladder Logic (LAD) control sequences, and conducted diagnostic hardware troubleshooting and system validation.",
     learnings: [
@@ -154,12 +160,12 @@ const WORK_EXPERIENCE_EVENTS = [
     ],
     skills: ["Siemens S7-1200 PLC", "TIA Portal", "Industrial Automation", "Ladder Logic (LAD)", "Hardware-in-the-Loop", "Instrumentation", "Mechatronics", "Sensors & Actuators"],
     impact: "Secured an outstanding A+ Grade with a 89% score (Certificate No: 2026-IA-S3-07), demonstrating high proficiency in industrial automation and programmable logic controllers.",
-    heroImage: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000&auto=format&fit=crop",
+    heroImage: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=70&w=1400&auto=format&fit=crop",
     certificate: siemensCert,
     certificatePdf: "/siemens-certificate.pdf",
     gallery: [
       { url: siemensCert, caption: "Official Siemens Internship Certificate (A+ Grade | 89% Score)" },
-      { url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=2000&auto=format&fit=crop", caption: "Siemens S7-1200 Industrial Automation Workstation" }
+      { url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=70&w=1400&auto=format&fit=crop", caption: "Siemens S7-1200 Industrial Automation Workstation" }
     ]
   }
 ];
@@ -193,32 +199,44 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
 
   return (
     <motion.div
-      className={`relative flex w-full mb-24 md:mb-32 ${index % 2 === 0 ? "md:justify-start" : "md:justify-end"}`}
+      className={`relative flex w-full mb-24 lg:mb-32 ${index % 2 === 0 ? "lg:justify-start" : "lg:justify-end"}`}
       initial={{ opacity: 0, y: 100 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Timeline Dot */}
-      <div className="absolute left-0 md:left-1/2 top-1/2 -translate-x-[4px] md:-translate-x-1/2 -translate-y-1/2 w-3 h-3 md:w-5 md:h-5 rounded-full bg-rose-800 shadow-[0_0_20px_rgba(136, 19, 55,0.5)] z-20 border-2 border-[#121212]" />
+      <div className="absolute left-0 lg:left-1/2 top-1/2 -translate-x-[4px] lg:-translate-x-1/2 -translate-y-1/2 w-3 h-3 lg:w-5 lg:h-5 rounded-full bg-rose-800 shadow-[0_0_20px_rgba(136,19,55,0.5)] z-20 border-2 border-[#121212]" />
 
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={() => setSelectedEvent(event)}
+        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setSelectedEvent(event))}
+        role="button"
+        tabIndex={0}
+        aria-label={'Open case study: ' + event.title}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className={`w-full md:w-[45%] pl-8 md:pl-0 cursor-none hover-magnetic group ${index % 2 === 1 ? "md:pl-16" : "md:pr-16"}`}
+        className={`w-full lg:w-[45%] pl-8 md:pl-10 lg:pl-0 hover-magnetic group outline-none focus-visible:ring-2 focus-visible:ring-rose-500/70 rounded-[2rem] ${index % 2 === 1 ? "lg:pl-16" : "lg:pr-16"}`}
       >
         <motion.div
           layoutId={`card-${event.id}`}
-          className="relative w-full rounded-[2rem] bg-white/5 border border-white/10 overflow-hidden transform-gpu backdrop-blur-md p-6 md:p-8 group-hover:bg-white-[0.08] transition-colors duration-500 cursor-none"
+          className="relative w-full rounded-[2rem] bg-white/[0.04] border border-white/10 hover:border-white/20 overflow-hidden p-6 md:p-8 group-hover:bg-white/[0.08] transition-colors duration-500"
         >
           <div style={{ transform: "translateZ(40px)" }}>
-            <p className="text-rose-700 text-[10px] md:text-xs font-semibold tracking-widest uppercase mb-4 opacity-80">
-              {event.tag}
-            </p>
-            <h3 className="text-2xl md:text-4xl font-bold text-white mb-2">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-4">
+              {event.status && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 text-emerald-300 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em]">
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  {event.status}
+                </span>
+              )}
+              <p className="text-rose-400/90 text-[10px] md:text-xs font-semibold tracking-widest uppercase leading-relaxed">
+                {event.tag}
+              </p>
+            </div>
+            <h3 className="text-xl sm:text-2xl md:text-4xl font-bold text-white mb-3 leading-tight">
               {event.title}
             </h3>
             
@@ -228,7 +246,7 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
                         href={event.organizationLink} 
                         target="_blank" 
                         rel="noreferrer"
-                        className="text-white hover:text-rose-600 transition-colors duration-300 font-bold text-sm md:text-lg flex items-center gap-2 group/orgLink outline-none cursor-none hover-magnetic"
+                        className="text-white hover:text-rose-600 transition-colors duration-300 font-bold text-sm md:text-lg flex items-center gap-2 group/orgLink outline-none hover-magnetic"
                         onClick={(e) => e.stopPropagation()}
                     >
                         {event.organization}
@@ -244,7 +262,7 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
                             href={event.associationLink} 
                             target="_blank" 
                             rel="noreferrer"
-                            className="text-white/30 text-xs hover:text-rose-500 transition-colors duration-300 outline-none w-fit cursor-none"
+                            className="text-white/30 text-xs hover:text-rose-500 transition-colors duration-300 outline-none w-fit"
                             onClick={(e) => e.stopPropagation()}
                         >
                             {event.association} ↗
@@ -264,7 +282,7 @@ const TimelineCard = ({ event, index, setSelectedEvent }) => {
               <img
                 src={event.heroImage}
                 alt={event.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-[0.16,1,0.3,1]"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 loading="lazy"
                 decoding="async"
               />
@@ -310,23 +328,17 @@ const ExperienceTimeline = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (selectedEvent) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [selectedEvent]);
+  // Freeze the page (Lenis + native) while the case study is open
+  useScrollLock(!!selectedEvent);
 
   return (
     <section
       id="experience"
       ref={containerRef}
-      className="relative w-full bg-[#050505] py-32 px-4 md:px-12 lg:px-24 z-20 overflow-hidden"
+      className="relative w-full bg-[#050505] py-24 md:py-32 px-5 md:px-12 lg:px-24 z-20 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-32 flex flex-col items-center text-center">
+        <div className="mb-20 md:mb-32 flex flex-col items-center text-center">
           <h2 className="text-5xl md:text-8xl font-medium tracking-tighter text-white flex flex-col items-center justify-center">
             <ScrollFloat text="Journey &" className="mr-3 md:mr-5" />
             <ScrollFloat
@@ -335,7 +347,7 @@ const ExperienceTimeline = () => {
               delay={0.2}
             />
           </h2>
-          <p className="max-w-2xl text-white/50 mt-8 leading-relaxed mx-auto text-lg">
+          <p className="max-w-2xl text-white/60 mt-8 leading-relaxed mx-auto text-base md:text-lg">
             A documented trail of real-world problem-solving, competitive
             technical expansion, and professional growth in robotics and
             full-stack engineering.
@@ -343,7 +355,7 @@ const ExperienceTimeline = () => {
         </div>
 
         {/* Section B: Internship & Work Experience (Clickable Timeline) */}
-        <div className="mb-40">
+        <div className="mb-24 md:mb-40">
           <motion.div
             className="flex items-center gap-4 mb-16"
             initial={{ opacity: 0, x: -20 }}
@@ -358,9 +370,9 @@ const ExperienceTimeline = () => {
           </motion.div>
 
           <div className="relative w-full">
-            <div className="absolute left-[1px] md:left-1/2 top-0 bottom-0 w-[1px] md:w-[1px] bg-white/10 md:-translate-x-1/2" />
+            <div className="absolute left-[1px] lg:left-1/2 top-0 bottom-0 w-[1px] lg:w-[1px] bg-white/10 lg:-translate-x-1/2" />
             <motion.div
-              className="absolute left-[0.5px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-rose-800 via-rose-700 to-transparent md:-translate-x-1/2 origin-top shadow-[0_0_20px_rgba(136, 19, 55,0.8)]"
+              className="absolute left-[0.5px] lg:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-rose-800 via-rose-700 to-transparent lg:-translate-x-1/2 origin-top shadow-[0_0_20px_rgba(136,19,55,0.8)]"
               style={{ scaleY }}
             />
             <div className="flex flex-col relative z-10 w-full pl-0">
@@ -391,9 +403,9 @@ const ExperienceTimeline = () => {
             <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
           </motion.div>
 
-          <div className="absolute left-[1px] md:left-1/2 top-0 bottom-0 w-[1px] md:w-[1px] bg-white/10 md:-translate-x-1/2" />
+          <div className="absolute left-[1px] lg:left-1/2 top-0 bottom-0 w-[1px] lg:w-[1px] bg-white/10 lg:-translate-x-1/2" />
           <motion.div
-            className="absolute left-[0.5px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-rose-800 via-rose-700 to-transparent md:-translate-x-1/2 origin-top shadow-[0_0_20px_rgba(136, 19, 55,0.8)]"
+            className="absolute left-[0.5px] lg:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-rose-800 via-rose-700 to-transparent lg:-translate-x-1/2 origin-top shadow-[0_0_20px_rgba(136,19,55,0.8)]"
             style={{ scaleY }}
           />
 
@@ -418,22 +430,23 @@ const ExperienceTimeline = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedEvent(null)}
-            className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-12 cursor-none backdrop-blur-2xl bg-[#050505]/90"
+            className="fixed inset-0 z-[200] flex items-center justify-center p-0 md:p-12 bg-[#050505]/95 backdrop-blur-sm"
           >
             <motion.button
-              className="absolute top-6 right-6 md:top-12 md:right-12 w-12 h-12 bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-300 z-[210] hover-magnetic outline-none cursor-none"
+              className="absolute top-6 right-6 md:top-12 md:right-12 w-12 h-12 bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-300 z-[210] hover-magnetic outline-none"
               onClick={() => setSelectedEvent(null)}
+              aria-label="Close case study"
             >
               <X className="w-5 h-5" />
             </motion.button>
 
             <motion.div
               layoutId={`card-${selectedEvent.id}`}
-              className="relative w-full h-full md:h-[90vh] md:max-w-6xl md:rounded-[2rem] bg-[#0a0a0a] md:border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col cursor-auto"
+              className="relative w-full h-full md:h-[90vh] md:max-w-6xl md:rounded-[2rem] bg-[#0a0a0a] md:border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div
-                className="w-full h-full overflow-y-auto overflow-x-hidden"
+                className="w-full h-full overflow-y-auto overflow-x-hidden overscroll-contain"
                 data-lenis-prevent
               >
                 {/* Hero Header Region */}
@@ -441,6 +454,7 @@ const ExperienceTimeline = () => {
                   <motion.img
                     layoutId={`image-${selectedEvent.id}`}
                     src={selectedEvent.heroImage}
+                    alt=""
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/40 to-black/20" />
@@ -454,8 +468,8 @@ const ExperienceTimeline = () => {
                         ease: "easeOut",
                       }}
                     >
-                      <p className="text-rose-700 font-semibold tracking-[0.2em] uppercase text-[10px] md:text-sm mb-4 flex items-center gap-3">
-                        {selectedEvent.type} <span className="w-1.5 h-1.5 rounded-full bg-rose-700 shadow-[0_0_10px_rgba(136, 19, 55,1)]" /> 
+                      <p className="text-rose-400 font-semibold tracking-[0.2em] uppercase text-[10px] md:text-sm mb-4 flex flex-wrap items-center gap-x-3 gap-y-1">
+                        {selectedEvent.type} <span className="w-1.5 h-1.5 rounded-full bg-rose-700 shadow-[0_0_10px_rgba(136,19,55,1)]" /> 
                         {selectedEvent.organizationLink ? (
                             <a 
                                 href={selectedEvent.organizationLink} 
@@ -478,9 +492,9 @@ const ExperienceTimeline = () => {
                 </div>
 
                 {/* Rich Content Grid */}
-                <div className="p-8 md:p-16 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24">
+                <div className="p-8 md:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 lg:gap-24">
                   {/* Left Column Data (Storytelling) */}
-                  <div className="md:col-span-7 flex flex-col gap-16">
+                  <div className="lg:col-span-7 flex flex-col gap-16">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -527,7 +541,7 @@ const ExperienceTimeline = () => {
                   </div>
 
                   {/* Right Column Data (Metrics & Skills) */}
-                  <div className="md:col-span-5 flex flex-col gap-12">
+                  <div className="lg:col-span-5 flex flex-col gap-12">
                     <motion.div
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -554,7 +568,7 @@ const ExperienceTimeline = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.5 }}
-                      className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-md"
+                      className="bg-white/[0.02] border border-white/5 rounded-3xl p-8"
                     >
                       <h4 className="text-rose-700 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-6">
                         Key Technical Learnings
@@ -614,6 +628,28 @@ const ExperienceTimeline = () => {
                     {/* Certificate Action Button - Only show if certificate exists */}
                     {selectedEvent.certificate ? (
                       <div className="flex flex-col gap-3">
+                        <h4 className="text-white/40 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-1">
+                          Certificate
+                        </h4>
+                        <a
+                          href={selectedEvent.certificate}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group/cert relative block rounded-2xl overflow-hidden border border-white/10 bg-white hover:border-rose-500/50 transition-colors duration-300"
+                          aria-label="Open certificate in full size"
+                        >
+                          <img
+                            src={selectedEvent.certificate}
+                            alt={`Certificate - ${selectedEvent.title}`}
+                            width="1628"
+                            height="2384"
+                            decoding="async"
+                            className="w-full h-auto max-h-[420px] aspect-[1628/2384] object-contain object-top bg-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/cert:scale-[1.02]"
+                          />
+                          <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 text-white text-[10px] font-bold uppercase tracking-[0.15em]">
+                            Full size ↗
+                          </span>
+                        </a>
                         <motion.a
                           href={selectedEvent.certificate}
                           target="_blank"
@@ -622,9 +658,9 @@ const ExperienceTimeline = () => {
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ delay: 0.6 }}
-                          className="flex items-center gap-6 bg-rose-800/10 hover:bg-rose-800/20 border border-rose-800/20 hover:border-rose-800/50 rounded-3xl p-6 transition-all duration-300 group cursor-none hover-magnetic outline-none"
+                          className="flex items-center gap-6 bg-rose-800/10 hover:bg-rose-800/20 border border-rose-800/20 hover:border-rose-800/50 rounded-3xl p-6 transition-all duration-300 group hover-magnetic outline-none"
                         >
-                          <div className="w-14 h-14 shrink-0 rounded-full bg-rose-800/20 flex items-center justify-center text-rose-700 group-hover:bg-rose-800 group-hover:text-[#050505] transition-colors duration-300 shadow-[0_0_20px_rgba(136, 19, 55,0.2)]">
+                          <div className="w-14 h-14 shrink-0 rounded-full bg-rose-800/20 flex items-center justify-center text-rose-700 group-hover:bg-rose-800 group-hover:text-[#050505] transition-colors duration-300 shadow-[0_0_20px_rgba(136,19,55,0.2)]">
                             <Award className="w-6 h-6" />
                           </div>
                           <div className="flex flex-col">
@@ -679,11 +715,15 @@ const ExperienceTimeline = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                       {selectedEvent.gallery.map((item, i) => (
                         <div key={i} className="flex flex-col gap-4">
-                          <div className="rounded-3xl overflow-hidden aspect-[4/3] md:aspect-video border border-white/10 group cursor-none relative">
+                          <div className="rounded-3xl overflow-hidden aspect-[4/3] md:aspect-video border border-white/10 group relative">
                             <div className="absolute inset-0 bg-rose-800/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                             <img
                               src={typeof item === "string" ? item : item.url}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1s] ease-[0.16,1,0.3,1]"
+                              className={`w-full h-full transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                                (typeof item === "string" ? item : item.url) === selectedEvent.certificate
+                                  ? "object-contain bg-white p-2 group-hover:scale-[1.03]"
+                                  : "object-cover group-hover:scale-110"
+                              }`}
                               alt={item.caption || "Event visual evidence"}
                               loading="lazy"
                               decoding="async"

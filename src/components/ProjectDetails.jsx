@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowRight, ArrowLeft, ExternalLink, Globe, Layout, Cpu, Palette, Star } from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, Star } from 'lucide-react';
+import useScrollLock from '../lib/useScrollLock';
 
 const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
     const [galleryIndex, setGalleryIndex] = useState(0);
 
+    useScrollLock(isOpen);
+
+    // Reset the gallery when switching projects
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-            setGalleryIndex(0);
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-        return () => { document.body.style.overflow = 'auto'; };
-    }, [isOpen]);
+        setGalleryIndex(0);
+    }, [project?.title]);
+
+    // Keyboard: Esc closes, arrows switch projects
+    useEffect(() => {
+        if (!isOpen) return undefined;
+        const onKey = (e) => {
+            if (e.key === 'Escape') onClose();
+            else if (e.key === 'ArrowRight') onNext();
+            else if (e.key === 'ArrowLeft') onPrev();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [isOpen, onClose, onNext, onPrev]);
 
     const handleBackdropClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -40,9 +50,9 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
             ],
             stack: ["Custom GLSL", "Vanilla JS", "GSAP Ticker Engine"],
             gallery: [
-                { url: "/progress.png", label: "Initial Wireframe & UI" },
-                { url: "/delivery.png", label: "Final Production Build" },
-                { url: "/handshake.png", label: "Client Handover Success" }
+                { url: "/progress.webp", label: "Initial Wireframe & UI" },
+                { url: "/delivery.webp", label: "Final Production Build" },
+                { url: "/handshake.webp", label: "Client Handover Success" }
             ]
         },
         "The Long Story": {
@@ -129,7 +139,8 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
         }
     };
 
-    const projectData = details[project.title] || details["default"];
+    const DETAIL_ALIASES = { "Gesture Control Robot [Nexora]": "Nexora GS-1" };
+    const projectData = details[DETAIL_ALIASES[project.title] || project.title] || details["default"];
     const isIoT = project.type === 'iot';
 
     return (
@@ -141,19 +152,23 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={handleBackdropClick}
-                    className="fixed inset-0 z-[300] flex items-center justify-center p-0 md:p-8 bg-black/90 backdrop-blur-3xl cursor-none"
+                    className="fixed inset-0 z-[300] flex items-center justify-center p-0 md:p-8 bg-black/90 backdrop-blur-sm"
                 >
                     <motion.div 
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={project.title}
                         initial={{ y: 30, opacity: 0, scale: 0.98 }}
                         animate={{ y: 0, opacity: 1, scale: 1 }}
                         exit={{ y: 30, opacity: 0, scale: 0.98 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="relative w-full max-w-5xl h-full md:h-[90vh] bg-[#0c0c0c] md:bg-[#0c0c0c]/80 border-none md:border md:border-white/10 rounded-none md:rounded-[2rem] shadow-3xl flex flex-col md:flex-row overflow-hidden isolate cursor-default"
+                        className="relative w-full max-w-5xl h-full md:h-[90vh] bg-[#0c0c0c] md:bg-[#0c0c0c]/80 border-none md:border md:border-white/10 rounded-none md:rounded-[2rem] shadow-2xl flex flex-col md:flex-row overflow-hidden isolate"
                     >
                         {/* Elegant Close Button Only */}
                         <button 
                             onClick={onClose}
-                            className="absolute top-6 right-6 z-[320] p-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all duration-500 hover:rotate-90"
+                            aria-label="Close project"
+                            className="absolute top-4 right-4 md:top-6 md:right-6 z-[320] p-3.5 md:p-4 rounded-full bg-black/50 md:bg-white/5 backdrop-blur-md hover:bg-white/10 border border-white/15 text-white transition-[background-color,transform] duration-500 hover:rotate-90"
                         >
                             <X size={18} />
                         </button>
@@ -164,30 +179,31 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                 initial={{ scale: 1.1, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ duration: 1 }}
-                                src={project.image} 
+                                src={project.image}
+                                alt=""
                                 className="w-full h-full object-cover"
                            />
                            <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c] via-transparent to-transparent hidden md:block" />
                            
                            {/* Subtle Navigation at bottom of image on desktop */}
                            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 bg-[#0c0c0c]/40 border border-white/10 p-1 rounded-full backdrop-blur-xl">
-                                <button onClick={onPrev} className="p-3 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-all">
+                                <button onClick={onPrev} aria-label="Previous project" className="p-3 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-all">
                                     <ArrowLeft size={16} />
                                 </button>
-                                <button onClick={onNext} className="p-3 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-all">
+                                <button onClick={onNext} aria-label="Next project" className="p-3 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-all">
                                     <ArrowRight size={16} />
                                 </button>
                            </div>
                         </div>
 
                         {/* Content Half */}
-                        <div className="w-full md:w-[60%] p-6 md:p-12 lg:p-16 overflow-y-auto flex flex-col bg-[#0c0c0c]" data-lenis-prevent>
+                        <div className="w-full md:w-[60%] p-6 md:p-12 lg:p-16 overflow-y-auto overscroll-contain flex flex-col bg-[#0c0c0c]" data-lenis-prevent>
                             <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-6">
                                     <span className="text-[9px] uppercase tracking-[0.3em] font-black text-rose-700 bg-rose-800/10 px-2.5 py-1 rounded">Project Detail</span>
                                     {project.isStared && (
                                         <span className="flex items-center gap-2 text-[9px] uppercase font-black text-yellow-500 px-2.5 py-1 rounded bg-yellow-500/10 border border-yellow-500/20">
-                                            <Star size={10} fill="currentColor" /> Stared Flagship
+                                            <Star size={10} fill="currentColor" /> Featured
                                         </span>
                                     )}
                                 </div>
@@ -203,8 +219,8 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                 {/* Journey Gallery: Animated Flip Stack */}
                                 {projectData.gallery && (
                                     <div className="mb-10">
-                                        <p className="text-[10px] uppercase tracking-widest text-white/20 mb-6 font-black">Interactive Journey //</p>
-                                        <div className="relative w-full h-[180px] perspective-[1000px] flex items-center justify-center group" onClick={nextImage}>
+                                        <p className="text-[10px] uppercase tracking-widest text-white/40 mb-6 font-bold">Gallery · tap to browse</p>
+                                        <div className="relative w-full h-[200px] md:h-[220px] [perspective:1000px] flex items-center justify-center group cursor-pointer" onClick={nextImage} role="button" tabIndex={0} aria-label="Next gallery image" onKeyDown={(e) => e.key === 'Enter' && nextImage()}>
                                             <AnimatePresence mode="popLayout">
                                                 <motion.div
                                                     key={galleryIndex}
@@ -214,7 +230,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                                     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                                                     className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-pointer"
                                                 >
-                                                    <img src={projectData.gallery[galleryIndex].url} alt="Gallery" className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-700" />
+                                                    <img src={projectData.gallery[galleryIndex].url} alt={projectData.gallery[galleryIndex].label} decoding="async" className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-700" />
                                                     <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black to-transparent">
                                                         <span className="text-[9px] text-white font-black uppercase tracking-[0.2em]">{projectData.gallery[galleryIndex].label}</span>
                                                     </div>
@@ -234,7 +250,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                 <div className="grid grid-cols-3 gap-6 mb-12 border-y border-white/5 py-8">
                                     {projectData.stats.map((stat, i) => (
                                         <div key={i}>
-                                            <p className="text-[10px] uppercase tracking-widest text-white/20 mb-1 font-black leading-none uppercase">{stat.label}</p>
+                                            <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2 font-bold leading-none">{stat.label}</p>
                                             <p className="text-2xl font-black text-white tracking-tighter">{stat.value}</p>
                                         </div>
                                     ))}
@@ -245,7 +261,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                     <div className="group/item">
                                         <div className="flex items-center gap-4 mb-4">
                                             <div className="w-8 h-px bg-rose-800/50" />
-                                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40">The Challenge //</h4>
+                                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/50">The Challenge //</h4>
                                         </div>
                                         <p className="text-white/80 text-sm md:text-base leading-relaxed font-light">
                                             {projectData.challenge}
@@ -256,7 +272,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                     <div className="group/item">
                                         <div className="flex items-center gap-4 mb-4">
                                             <div className="w-8 h-px bg-blue-500/50" />
-                                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40">Proposed Solution //</h4>
+                                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/50">Proposed Solution //</h4>
                                         </div>
                                         <p className="text-white/80 text-sm md:text-base leading-relaxed font-light font-serif italic">
                                             {projectData.solution}
@@ -267,7 +283,7 @@ const ProjectDetails = ({ project, isOpen, onClose, onNext, onPrev }) => {
                                     <div className="group/item">
                                         <div className="flex items-center gap-4 mb-6">
                                             <div className="w-8 h-px bg-purple-500/50" />
-                                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40">Technical Stack //</h4>
+                                            <h4 className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/50">Technical Stack //</h4>
                                         </div>
                                         <div className="flex flex-wrap gap-2">
                                             {projectData.stack.map((item, i) => (

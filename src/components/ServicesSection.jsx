@@ -6,6 +6,11 @@ const CapabilityCard = ({ item, i }) => {
     const cardRef = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
+    // Hooks must not be called inline inside JSX — compute the spotlight here.
+    const spotlight = useTransform(
+        [mouseX, mouseY],
+        ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, rgba(225,29,72,0.08), rgba(225,29,72,0) 80%)`
+    );
 
     const handleMouseMove = (e) => {
         if (!cardRef.current) return;
@@ -17,46 +22,41 @@ const CapabilityCard = ({ item, i }) => {
     return (
         <motion.div 
             ref={cardRef}
-            onMouseMove={handleMouseMove}
+            onPointerMove={handleMouseMove}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative border-b border-white/[0.06] pb-16 mb-16 cursor-none overflow-hidden"
+            className="group relative border-b border-white/[0.06] pb-10 md:pb-16 overflow-hidden"
         >
             {/* Magnetic Spotlight Effect */}
             <motion.div 
                 className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
-                style={{
-                    background: useTransform(
-                        [mouseX, mouseY],
-                        ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, rgba(136, 19, 55, 0.1), rgba(136, 19, 55, 0) 80%)`
-                    )
-                }}
+                style={{ background: spotlight }}
             />
             
             <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start relative z-10">
                 {/* Large Background Numeral */}
-                <span className="absolute -right-4 -top-8 text-[12rem] font-black text-white/[0.02] pointer-events-none select-none group-hover:text-rose-800/[0.03] transition-colors duration-1000 uppercase">
+                <span aria-hidden="true" className="absolute -right-4 -top-8 text-[7rem] md:text-[12rem] font-black text-white/[0.02] pointer-events-none select-none group-hover:text-rose-800/[0.03] transition-colors duration-1000 uppercase">
                     {item.num}
                 </span>
 
-                <span className="text-rose-800/60 font-mono text-[10px] tracking-[0.4em] mt-2 shrink-0 md:w-16 uppercase">
+                <span className="text-rose-500/80 font-mono text-[10px] tracking-[0.4em] mt-2 shrink-0 md:w-16 uppercase">
                     {item.num} //
                 </span>
                 
-                <div className="flex flex-col gap-6 transform group-hover:translate-x-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                    <h3 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">
+                <div className="flex flex-col gap-4 md:gap-6 md:group-hover:translate-x-4 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <h3 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[0.95]">
                         {item.title}
                     </h3>
-                    <p className="text-white/40 text-base md:text-xl leading-relaxed max-w-2xl font-light font-serif italic border-l border-white/5 pl-8">
+                    <p className="text-white/60 text-base md:text-xl leading-relaxed max-w-2xl border-l border-white/10 pl-5 md:pl-8">
                         {item.desc}
                     </p>
                 </div>
             </div>
             
             {/* Sub-reveal indicator */}
-            <div className="mt-12 h-px w-0 group-hover:w-full bg-gradient-to-r from-rose-800/50 to-transparent transition-all duration-1000 ease-out" />
+            <div className="mt-10 md:mt-12 h-px w-full origin-left scale-x-0 group-hover:scale-x-100 bg-gradient-to-r from-rose-700/60 to-transparent transition-transform duration-1000 ease-out" />
         </motion.div>
     );
 };
@@ -96,22 +96,22 @@ const ServicesSection = () => {
     ];
 
     return (
-        <section id="services" className="relative w-full bg-[#0a0a0a] py-48 px-6 md:px-12 lg:px-24 z-20 border-t border-white/[0.03]">
+        <section id="services" className="relative w-full bg-[#0a0a0a] py-24 md:py-48 px-5 md:px-12 lg:px-24 z-20 border-t border-white/[0.04]">
             <div className="max-w-7xl mx-auto flex flex-col items-center">
                 
-                <div className="w-full mb-32 flex flex-col md:flex-row justify-between items-end gap-8 border-b border-white/5 pb-24">
+                <div className="w-full mb-16 md:mb-32 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-white/5 pb-12 md:pb-24">
                     <div className="flex-1">
-                        <h2 className="text-6xl md:text-[8vw] font-black tracking-tighter text-white uppercase leading-[0.8]">
+                        <h2 className="text-5xl sm:text-6xl md:text-[8vw] font-black tracking-tighter text-white uppercase leading-[0.8]">
                             <ScrollFloat text="Core" />
-                            <span className="italic font-serif font-light text-white/20 lowercase block mt-4">capabilities.</span>
+                            <span className="italic font-serif font-normal text-white/25 lowercase block mt-4">capabilities.</span>
                         </h2>
                     </div>
-                    <p className="max-w-xs text-white/30 text-[10px] uppercase tracking-[0.4em] leading-relaxed font-mono text-right">
-                        Capabilities // Solving complex commercial challenges through elite independent engineering.
+                    <p className="max-w-xs text-white/50 text-[10px] uppercase tracking-[0.35em] leading-relaxed font-mono md:text-right">
+                        What I do — end-to-end engineering across software, hardware and the cloud.
                     </p>
                 </div>
                 
-                <div className="w-full grid grid-cols-1 gap-12 pt-4">
+                <div className="w-full grid grid-cols-1 gap-10 md:gap-16 pt-4">
                     {capabilities.map((item, i) => (
                         <CapabilityCard key={i} item={item} i={i} />
                     ))}

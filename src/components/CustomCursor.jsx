@@ -1,100 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
+const INTERACTIVE = 'a, button, [role="button"], .hover-magnetic, [data-cursor-point]';
+// Only devices with a real mouse/trackpad get the custom cursor. Touch phones,
+// tablets and hybrid devices in touch mode keep their native behaviour.
+const FINE_POINTER = '(hover: hover) and (pointer: fine)';
+
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
-  const springConfig = { damping: 25, stiffness: 700, mass: 0.5 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const dotX = useSpring(cursorX, { damping: 40, stiffness: 1200, mass: 0.3 });
+  const dotY = useSpring(cursorY, { damping: 40, stiffness: 1200, mass: 0.3 });
+  const ringX = useSpring(cursorX, { damping: 30, stiffness: 450, mass: 0.5 });
+  const ringY = useSpring(cursorY, { damping: 30, stiffness: 450, mass: 0.5 });
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [enabled, setEnabled] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    const mq = window.matchMedia(FINE_POINTER);
+    const update = () => setEnabled(mq.matches);
+    update();
+    mq.addEventListener?.('change', update);
+    return () => mq.removeEventListener?.('change', update);
+  }, []);
 
-    if (isMobile) return;
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!enabled) {
+      root.classList.remove('has-custom-cursor');
+      return undefined;
+    }
+    root.classList.add('has-custom-cursor');
 
-    // Pure DOM update, no React re-rendering on mousemove
-    const moveCursor = (e) => {
+    const move = (e) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
+      setIsVisible(true);
     };
-
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      if (
-        target.tagName.toLowerCase() === 'a' ||
-        target.tagName.toLowerCase() === 'button' ||
-        target.closest('a') ||
-        target.closest('button') ||
-        target.classList.contains('hover-magnetic') ||
-        target.dataset.cursorPoint
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const over = (e) => {
+      const hit = !!(e.target && e.target.closest && e.target.closest(INTERACTIVE));
+      setIsHovering(hit);
     };
+    const leave = () => setIsVisible(false);
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('pointerover', over, { passive: true });
+    document.addEventListener('pointerleave', leave);
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mouseover', handleMouseOver);
+      root.classList.remove('has-custom-cursor');
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerover', over);
+      document.removeEventListener('pointerleave', leave);
     };
-  }, [cursorX, cursorY, isMobile]);
+  }, [enabled, cursorX, cursorY]);
 
-  if (isMobile) return null;
+  if (!enabled) return null;
 
   return (
     <>
-      {/* Tiny dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%"
-        }}
-        animate={{
-          scale: isHovering ? 0 : 1,
-        }}
+        aria-hidden="true"
+        className="fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        style={{ x: dotX, y: dotY }}
+        animate={{ scale: isHovering ? 0 : 1, opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.2 }}
       />
-      {/* Outer Glow / Expanding circle */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-white/40 rounded-full pointer-events-none z-[9998] flex items-center justify-center backdrop-blur-sm"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        initial={{ backgroundColor: 'rgba(255,255,255,0)' }}
+        aria-hidden="true"
+        className="fixed top-0 left-0 w-10 h-10 -ml-5 -mt-5 rounded-full border pointer-events-none z-[9998]"
+        style={{ x: ringX, y: ringY }}
         animate={{
-          scale: isHovering ? 1.8 : 1,
-          backgroundColor: isHovering ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0)',
-          borderColor: isHovering ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.4)',
+          scale: isHovering ? 1.6 : 1,
+          opacity: isVisible ? 1 : 0,
+          backgroundColor: isHovering ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0)',
+          borderColor: isHovering ? 'rgba(244,63,94,0.6)' : 'rgba(255,255,255,0.35)',
         }}
         transition={{ type: 'tween', ease: 'easeOut', duration: 0.25 }}
-      >
-        <motion.div 
-            className="w-1.5 h-1.5 bg-white rounded-full opacity-0"
-            animate={{
-                opacity: isHovering ? 1 : 0
-            }}
-        />
-      </motion.div>
+      />
     </>
   );
 };
